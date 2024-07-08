@@ -1,9 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import SuperheroList from './SuperheroList';
-import SuperheroProvider from './SuperheroProvider';
-import SuperheroLoader from './SuperheroLoader';
+import SuperheroList from './domain/superhero/SuperheroList';
+import SuperheroProvider from './domain/superhero/SuperheroProvider';
+import SuperheroLoader from './domain/superhero/SuperheroLoader';
 
 function App() {
   return (

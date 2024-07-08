@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import SuperheroContext from './SuperheroContext';
-import ErrorMessage from './ErrorMessage';
+import ErrorMessage from '../error/ErrorMessage';
 
 
 const SuperheroLoader: React.FC = () => {
