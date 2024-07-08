@@ -1,0 +1,140 @@
+{
+  "superheroes": [
+    {
+      "id": 1,
+      "alias": "The Administrator",
+      "realName": "Andreas Admin",
+      "dateOfBirth": "1987-07-22",
+      "gender": "Male",
+      "occupation": "Administrator",
+      "originStory": "Alex Admin gained superhuman administrative skills after being exposed to a mysterious computer virus.",
+      "user": {
+        "email": "admin@example.com",
+        "role": "ADMIN"
+      }
+    },
+    {
+      "id": 2,
+      "alias": "Captain Courageous",
+      "realName": "Chris Courage",
+      "dateOfBirth": "1980-05-15",
+      "gender": "Male",
+      "occupation": "Defender of Justice",
+      "originStory": "Chris Courage was a regular citizen until a fateful accident imbued him with superhuman courage.",
+      "user": {
+        "email": "chris@example.com",
+        "role": "USER"
+      }
+    },
+    {
+      "id": 3,
+      "alias": "Speedster",
+      "realName": "Samantha Swift",
+      "dateOfBirth": "1992-08-21",
+      "gender": "Female",
+      "occupation": "Delivery Driver",
+      "originStory": "Samantha Swift gained the ability to move at incredible speeds after being struck by lightning.",
+      "user": {
+        "email": "samantha@example.com",
+        "role": "USER"
+      }
+    },
+    {
+      "id": 4,
+      "alias": "The Kindness Knight",
+      "realName": "Kevin Knight",
+      "dateOfBirth": "1975-02-10",
+      "gender": "Male",
+      "occupation": "Social Worker",
+      "originStory": "Kevin Knight was inspired to become a hero after witnessing acts of kindness in his community.",
+      "user": {
+        "email": "kevin@example.com",
+        "role": "USER"
+      }
+    },
+    {
+      "id": 5,
+      "alias": "Doctor Empathy",
+      "realName": "Emma Empath",
+      "dateOfBirth": "1988-11-03",
+      "gender": "Female",
+      "occupation": "Psychologist",
+      "originStory": "Emma Empath developed the power to sense and understand the emotions of others during a medical experiment.",
+      "user": {
+        "email": "emma@example.com",
+        "role": "USER"
+      }
+    },
+    {
+      "id": 6,
+      "alias": "The Wise Owl",
+      "realName": "Oliver Wisdom",
+      "dateOfBirth": "1963-09-28",
+      "gender": "Male",
+      "occupation": "Retired Teacher",
+      "originStory": "Oliver Wisdom's wisdom is legendary, and he uses his knowledge to guide and mentor other heroes.",
+      "user": {
+        "email": "oliver@example.com",
+        "role": "USER"
+      }
+    },
+    {
+      "id": 7,
+      "alias": "Creative Genius",
+      "realName": "Cassandra Creative",
+      "dateOfBirth": "1995-04-17",
+      "gender": "Female",
+      "occupation": "Artist",
+      "originStory": "Cassandra Creative's imaginative mind allows her to come up with ingenious solutions to any problem.",
+      "user": {
+        "email": "cassandra@example.com",
+        "role": "USER"
+      }
+    },
+    {
+      "id": 8,
+      "alias": "The Gentle Giant",
+      "realName": "Gary Gentle",
+      "dateOfBirth": "1978-07-09",
+      "gender": "Male",
+      "occupation": "Construction Worker",
+      "originStory": "Gary Gentle possesses superhuman strength, but he uses it with care and gentleness to help others.",
+      "user": {
+        "email": "gary@example.com",
+        "role": "USER"
+      }
+    },
+    {
+      "id": 9,
+      "alias": "Lady Loyalty",
+      "realName": "Leah Loyal",
+      "dateOfBirth": "1986-12-30",
+      "gender": "Female",
+      "occupation": "Veterinarian",
+      "originStory": "Leah Loyal is known for her unwavering loyalty to her friends and the causes she believes in.",
+      "user": {
+        "email": "leah@example.com",
+        "role": "USER"
+      }
+    },
+    {
+      "id": 10,
+      "alias": "The Peacekeeper",
+      "realName": "Pete Peace",
+      "dateOfBirth": "1970-03-25",
+      "gender": "Male",
+      "occupation": "Mediator",
+      "originStory": "Pete Peace has the ability to calm any situation and find peaceful resolutions to conflicts.",
+      "user": {
+        "email": "pete@example.com",
+        "role": "USER"
+      }
+    }
+  ],
+  "pageMeta": {
+    "pageNumber": 0,
+    "totalPages": 2,
+    "pageSize": 10,
+    "totalElements": 16
+  }
+}
