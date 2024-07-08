@@ -1,6 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import SuperheroList from './SuperheroList';
+import SuperheroProvider from './SuperheroProvider';
+import SuperheroLoader from './SuperheroLoader';
 
 function App() {
   return (
@@ -19,6 +22,12 @@ function App() {
           Learn React
         </a>
       </header>
+      <main>
+        <SuperheroProvider>
+          <SuperheroLoader />
+          <SuperheroList />
+        </SuperheroProvider>
+      </main>
     </div>
   );
 }
