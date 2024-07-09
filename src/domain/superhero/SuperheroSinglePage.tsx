@@ -9,8 +9,10 @@ const SuperheroSinglePage: React.FC = () => {
   return (
     <>
       <h1>Superheld:in</h1>
-      <SuperheroLoader id={id} />
-      <SuperheroSingle />
+      <SuperheroLoader id={id} >
+              <SuperheroSingle />
+      </SuperheroLoader>
+
       <p>
         <Link to="/">Weiter zur Startseite</Link>
       </p>

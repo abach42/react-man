@@ -4,8 +4,9 @@ import SuperheroContext from "./SuperheroContext";
 import ErrorMessage from "../error/ErrorMessage";
 import { Superhero } from "./Superhero";
 
-type OptionalId = {
+type Props = {
   id: number | null;
+  children: React.ReactNode
 };
 
 abstract class RequestStrategy {
@@ -40,7 +41,7 @@ class SingleAbilty extends RequestStrategy {
   }
 }
 
-const SuperheroLoader: React.FC<OptionalId> = ({ id }) => {
+const SuperheroLoader: React.FC<Props> = ({ id, children }) => {
   const [, setSuperheroes] = useContext(SuperheroContext);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -75,7 +76,7 @@ const SuperheroLoader: React.FC<OptionalId> = ({ id }) => {
     return <ErrorMessage message={error} />;
   }
 
-  return isLoading ? <div>Loading...</div> : <></>;
+  return isLoading ? <div>Loading...</div> :  <>{children}</>;
 };
 
 export default SuperheroLoader;
