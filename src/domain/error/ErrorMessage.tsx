@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
 type Props = {
   message: string;
-}
+};
 
 const ErrorMessage: React.FC<Props> = ({ message }) => (
   <div className="error-message">

@@ -55,12 +55,15 @@ const SuperheroLoader: React.FC<OptionalId> = ({ id }) => {
       try {
         const superheroes = await strategy.fetchSuperheroes();
 
+        if (!superheroes) {
+          throw new Error("result was empty");
+        }
         setSuperheroes(superheroes);
       } catch (error: any) {
         setError(
-          `No books loaded: ${
-            error.message || "An error occurred while fetching books"
-          } ${error.response?.status}`
+          `No superheroes loaded: ${
+            error.message || "An error occurred while fetching superheroes"
+          } ${error.response?.status ?? ""}`
         );
       } finally {
         setIsLoading(false);

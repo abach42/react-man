@@ -1,21 +1,32 @@
+import { ZoomIn } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
+import { Link } from "react-router-dom";
 import { Superhero } from "./Superhero";
 
 type SuperheroProps = {
-    superhero: Superhero;
-    handleClick: (superhero: Superhero) => void;
-}
+  superhero: Superhero;
+};
 
-const SuperheroListItem: React.FC<SuperheroProps> = ({ superhero, handleClick }) => {
-    return (
-        <tr onClick={() => handleClick(superhero)}>
-            <td>{superhero.realName}</td>
-            <td>{superhero.alias}</td>
-            <td>{superhero.dateOfBirth}</td>
-            <td>{superhero.gender}</td>
-            <td>{superhero.occupation}</td>
-            <td>{superhero.user.role}</td>
-        </tr>
-    );
+const SuperheroListItem: React.FC<SuperheroProps> = ({ superhero }) => {
+  return (
+    <tr>
+      <td>{superhero.realName}</td>
+      <td>{superhero.alias}</td>
+      <td>{superhero.dateOfBirth}</td>
+      <td>{superhero.gender}</td>
+      <td>{superhero.occupation}</td>
+      <td>{superhero.user.role}</td>
+      <td>
+        <IconButton
+          aria-label="edit"
+          component={Link}
+          to={`/superhero/${superhero.id}`}
+        >
+          <ZoomIn />
+        </IconButton>
+      </td>
+    </tr>
+  );
 };
 
 export default SuperheroListItem;

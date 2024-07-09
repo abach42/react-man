@@ -1,4 +1,4 @@
 export type User = {
-    email: string;
-    role: "ADMIN" | "USER"; 
-}
+  email: string;
+  role: "ADMIN" | "USER";
+};

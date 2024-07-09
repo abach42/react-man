@@ -1,11 +1,15 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import SuperheroList from './domain/superhero/SuperheroList';
-import SuperheroProvider from './domain/superhero/SuperheroProvider';
-import SuperheroLoader from './domain/superhero/SuperheroLoader';
+import { Container } from "@mui/material";
+import React from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import "./App.css";
+import SuperheroListPage from "./domain/superhero/SuperheroListPage";
+import SuperheroProvider from "./domain/superhero/SuperheroProvider";
+import SuperheroSinglePage from "./domain/superhero/SuperheroSinglePage";
+import logo from "./logo.svg";
+import Nav from "./navigation/Nav";
+import NotFound from "./navigation/NotFound";
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
@@ -13,12 +17,19 @@ function App() {
       </header>
       <main>
         <SuperheroProvider>
-          <SuperheroLoader id={null} />
-          <SuperheroList />
+          <Nav />
+          <Container sx={{ marginTop: "80px" }}>
+            <Routes>
+              <Route path="/list" element={<SuperheroListPage />} />
+              <Route path="/superhero/:id" element={<SuperheroSinglePage />} />
+              <Route path="/" element={<Navigate to="/list" />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Container>
         </SuperheroProvider>
       </main>
     </div>
   );
-}
+};
 
 export default App;
