@@ -1,14 +1,21 @@
 import { useContext } from "react";
 import SuperheroContext from "./SuperheroContext";
 import SuperheroListItem from "./SuperheroListItem";
+import { Superhero } from "./Superhero";
 
 const SuperheroList: React.FC = () => {
     const [superheroes, ] = useContext(SuperheroContext);
 
     if (superheroes.length === 0) {
-        return <div>Keine Helden gefunden</div>;
+        return <div>Keine Held:innen gefunden</div>;
     }
 
+    const handleSuperheroClick = (superhero: Superhero) => {
+        return (
+            <div>foo</div>
+        );
+    };
+    
     return (
         <table>
         <thead>
@@ -23,7 +30,7 @@ const SuperheroList: React.FC = () => {
         </thead>
         <tbody>
           {superheroes.map((superhero) => (
-            <SuperheroListItem key={superhero.id} superhero={superhero} />
+            <SuperheroListItem key={superhero.id} superhero={superhero} handleClick={handleSuperheroClick}/>
           ))}
         </tbody>
       </table>

@@ -1,3 +1,6 @@
 ### list superheroes /todo: missing key "superheroes", missing JWT
 GET http://localhost:3001/superheroes HTTP/1.1
 
+### single superhero
+GET http://localhost:3001/superheroes/1 HTTP/1.1
+

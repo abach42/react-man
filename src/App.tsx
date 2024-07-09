@@ -13,7 +13,7 @@ function App() {
       </header>
       <main>
         <SuperheroProvider>
-          <SuperheroLoader />
+          <SuperheroLoader id={1} />
           <SuperheroList />
         </SuperheroProvider>
       </main>
