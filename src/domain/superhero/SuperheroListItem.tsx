@@ -1,4 +1,4 @@
-import { Edit, ZoomIn } from "@mui/icons-material";
+import { Delete, Edit, ZoomIn } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Superhero } from "./Superhero";
@@ -33,6 +33,16 @@ const SuperheroListItem: React.FC<SuperheroProps> = ({ superhero }) => {
           <Edit />
         </IconButton>
       </td>
+      <td>
+        <IconButton
+          aria-label="delete"
+          component={Link}
+          to={`/delete/${superhero.id}`}
+        >
+          <Delete />
+        </IconButton>
+      </td>
+      
     </tr>
   );
 };

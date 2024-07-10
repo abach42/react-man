@@ -9,6 +9,7 @@ import logo from "./logo.svg";
 import Nav from "./navigation/Nav";
 import NotFound from "./navigation/NotFound";
 import Form from "./domain/superhero/Form";
+import Delete from "./domain/superhero/Delete";
 
 const App: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const App: React.FC = () => {
             <Routes>
               <Route path="/list" element={<SuperheroListPage />} />
               <Route path="/edit/:id" element={<Form />} />
+              <Route path="/delete/:id" element={<Delete />} />
               <Route path="/new" element={<Form />} />
               <Route path="/superhero/:id" element={<SuperheroSinglePage />} />
               <Route path="/" element={<Navigate to="/list" />} />
