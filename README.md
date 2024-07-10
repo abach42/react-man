@@ -2,7 +2,7 @@
 
 npx json-server -p 3001 -w ./fixtures/listSuperhero.json
 
-
+npm test
 
 # Getting Started with Create React App
 
