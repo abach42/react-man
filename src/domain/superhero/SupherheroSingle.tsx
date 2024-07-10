@@ -15,7 +15,9 @@ const SuperheroSingle: React.FC = () => {
       <em>Geburtsdatum</em> {superhero.dateOfBirth} <br />
       <em>Geschlecht</em> {superhero.gender} <br />
       <em>Scheinbarer Job</em> {superhero.occupation} <br />
-      <em>Nutzer:innen Gruppe</em> {superhero.user.role}
+      <em>Lebensgeschichte</em> {superhero.originStory} <br />
+      <em>Nutzer:innen Gruppe</em> {superhero.user.role} <br />
+      <em>Nutzer:innen E-Mail:innenden</em> {superhero.user.email} <br />
     </div>
   );
 };

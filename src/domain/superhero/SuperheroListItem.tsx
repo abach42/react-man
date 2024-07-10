@@ -1,4 +1,4 @@
-import { ZoomIn } from "@mui/icons-material";
+import { Edit, ZoomIn } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Superhero } from "./Superhero";
@@ -15,7 +15,6 @@ const SuperheroListItem: React.FC<SuperheroProps> = ({ superhero }) => {
       <td>{superhero.dateOfBirth}</td>
       <td>{superhero.gender}</td>
       <td>{superhero.occupation}</td>
-      <td>{superhero.user.role}</td>
       <td>
         <IconButton
           aria-label="edit"
@@ -23,6 +22,15 @@ const SuperheroListItem: React.FC<SuperheroProps> = ({ superhero }) => {
           to={`/superhero/${superhero.id}`}
         >
           <ZoomIn />
+        </IconButton>
+      </td>
+      <td>
+        <IconButton
+          aria-label="edit"
+          component={Link}
+          to={`/edit/${superhero.id}`}
+        >
+          <Edit />
         </IconButton>
       </td>
     </tr>

@@ -18,7 +18,7 @@ const SuperheroList: React.FC = () => {
           <th>Geburtsdatum</th>
           <th>Geschlecht</th>
           <th>Scheinbarer Job</th>
-          <th>Nutzer:innen Gruppe</th>
+          <th colSpan={2}></th>
         </tr>
       </thead>
       <tbody>
