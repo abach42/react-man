@@ -28,7 +28,6 @@ enum Gender {
 }
 
 const AddNewSuperheroForm: React.FC = () => {
-  
   const { control, register, handleSubmit, reset, setValue } =
   useForm<Superhero>({
     defaultValues: {
@@ -84,8 +83,6 @@ const AddNewSuperheroForm: React.FC = () => {
   function handleClose() {
     navigate("/list");
   }
-
- 
 
   return ( 
     isLoading ? <><CircularProgress /></> :
