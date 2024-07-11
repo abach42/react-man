@@ -1,8 +1,9 @@
-import { Button } from "@mui/material";
+import { Button, Card, CardContent, Grid, TextField } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Superhero } from "./Superhero";
 import { useForm } from "react-hook-form";
+import { Close, Save } from "@mui/icons-material";
 
 const Form: React.FC = () => {
   const { register, handleSubmit, reset } = useForm<Superhero>({
@@ -52,54 +53,53 @@ const Form: React.FC = () => {
   }
 
   return (
-    <div
-      aria-labelledby="form-dialog-title"
-      aria-describedby="form-dialog-description"
-    >
-      <form onSubmit={handleSubmit(handleSave)}>
-        <div id="form-dialog-title">
-          {id ? "Superheld bearbeiten" : "Neuen Superhelden anlegen"}
-        </div>
-        <div id="form-dialog-description">
-          <div>
-            realName:
-            <input {...register("realName")} />
-          </div>
-          <div>
-            alias:
-            <input {...register("alias")} />
-          </div>
-          <div>
-            dateOfBirth:
-            <input {...register("dateOfBirth")} />
-          </div>
-          <div>
-            gender:
-            <input {...register("gender")} />
-          </div>
-          <div>
-            occupation:
-            <input {...register("occupation")} />
-          </div>
-          <div>
-            originStory:
-            <input {...register("originStory")} />
-          </div>
-          <div>
-            email:
-            <input {...register("user.email")} />
-          </div>
-        </div>
-        <div>
-          <Button color="secondary" onClick={handleClose}>
-            Abbrechen
-          </Button>
-          <Button color="primary" type="submit">
-            Speichern
-          </Button>
-        </div>
-      </form>
-    </div>
+    <Card>
+      <CardContent>
+        <form onSubmit={handleSubmit(handleSave)}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Real Name"
+                {...register("realName")}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField fullWidth label="Alias" {...register("alias")} />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField fullWidth label="Date of Birth" {...register("dateOfBirth")} />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField fullWidth label="Gender" {...register("gender")} />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField fullWidth label="Occupation" {...register("occupation")} />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Origin Story"
+                multiline
+                minRows={4}
+                {...register("originStory")}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField fullWidth label="Email" {...register("user.email")} />
+            </Grid>
+            <Grid item xs={12}>
+              <Button variant="contained" color="primary" type="submit">
+                <Save />Speichern
+              </Button>
+              <Button variant="contained" color="secondary" onClick={handleClose}>
+                <Close />Abbrechen
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </CardContent>
+    </Card>
   );
 };
 

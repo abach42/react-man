@@ -129,19 +129,6 @@
         "email": "pete@example.com",
         "role": "USER"
       }
-    },
-    {
-      "id": "5952",
-      "realName": "jklö",
-      "alias": "jklö",
-      "dateOfBirth": "jklö",
-      "gender": "jklö",
-      "occupation": "jklö",
-      "originStory": "jköl",
-      "user": {
-        "email": "jklö",
-        "role": "USER"
-      }
     }
   ],
   "pageMeta": {
