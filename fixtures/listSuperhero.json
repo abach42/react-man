@@ -116,19 +116,6 @@
         "email": "leah@example.com",
         "role": "USER"
       }
-    },
-    {
-      "id": "10",
-      "alias": "The Peacekeeper",
-      "realName": "Pete Peace",
-      "dateOfBirth": "1970-03-25",
-      "gender": "Male",
-      "occupation": "Mediator",
-      "originStory": "Pete Peace has the ability to calm any situation and find peaceful resolutions to conflicts.",
-      "user": {
-        "email": "pete@example.com",
-        "role": "USER"
-      }
     }
   ],
   "pageMeta": {
