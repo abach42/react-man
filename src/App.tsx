@@ -16,10 +16,13 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { amber, deepOrange, grey } from "@mui/material/colors";
+import { amber, blue, deepOrange, grey, teal } from "@mui/material/colors";
 import ColorModeContext from "./navigation/ColorModeContext";
 import ToggleColorMode from "./navigation/ToggleColorMode";
 
+const customReactBlue = {
+  main: '#00d8ff',
+};
 
 
 const getDesignTokens = (mode: PaletteMode) => ({
@@ -34,14 +37,18 @@ const getDesignTokens = (mode: PaletteMode) => ({
             primary: grey[900],
             secondary: grey[800],
           },
+          background: {
+            default: amber[600],
+            paper: grey[200],
+          },
         }
       : {
           // palette values for dark mode
-          primary: deepOrange,
-          divider: deepOrange[700],
+          primary: customReactBlue,
+          divider: teal[400],
           background: {
-            default: deepOrange[900],
-            paper: deepOrange[900],
+            default: grey[800],
+            paper: grey[800],
           },
           text: {
             primary: "#fff",
@@ -52,7 +59,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
 });
 
 const App: React.FC = () => {
-  const [mode, setMode] = React.useState<PaletteMode>("dark");
+  const [mode, setMode] = React.useState<PaletteMode>("light");
 
   const colorMode = React.useMemo(
     () => ({
@@ -65,6 +72,8 @@ const App: React.FC = () => {
     }),
     []
   );
+
+  console.log(mode);
 
   // Update the theme only if the mode changes
   const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);

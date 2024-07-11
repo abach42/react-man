@@ -17,6 +17,7 @@ const SuperheroListItem: React.FC<SuperheroProps> = ({ superhero }) => {
       <TableCell>{superhero.occupation}</TableCell>
       <TableCell>
         <IconButton
+          color="primary"
           aria-label="edit"
           component={Link}
           to={`/superhero/${superhero.id}`}
@@ -25,6 +26,7 @@ const SuperheroListItem: React.FC<SuperheroProps> = ({ superhero }) => {
         </IconButton>
 
         <IconButton
+          color="primary"
           aria-label="edit"
           component={Link}
           to={`/edit/${superhero.id}`}
@@ -33,6 +35,7 @@ const SuperheroListItem: React.FC<SuperheroProps> = ({ superhero }) => {
         </IconButton>
 
         <IconButton
+          color="primary"
           aria-label="delete"
           component={Link}
           to={`/delete/${superhero.id}`}
