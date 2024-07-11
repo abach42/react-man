@@ -5,21 +5,37 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  TableSortLabel,
   TextField,
 } from "@mui/material";
 import { ChangeEvent, useContext, useState } from "react";
 import SuperheroContext from "./SuperheroContext";
 import SuperheroListItem from "./SuperheroListItem";
+import { Superhero } from "./Superhero";
 
 const SuperheroList: React.FC = () => {
   const [superheroes] = useContext(SuperheroContext);
   const [filter, setFilter] = useState("");
 
+  const headers = {
+    realName: "Name",
+    alias: "Alias",
+    dateOfBirth: "Geburtsdatum",
+    gender: "Geschlecht",
+    occupation: "Scheinbarer Job",
+  };
+
+  const [sort, setSort] = useState<{
+    orderBy: keyof Superhero;
+    order: "asc" | "desc";
+  }>({
+    orderBy: "alias",
+    order: "asc",
+  });
+
   if (superheroes.length === 0) {
     return <></>;
   }
-
-  console.log(filter);
 
   return (
     <>
@@ -37,11 +53,22 @@ const SuperheroList: React.FC = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Alias</TableCell>
-              <TableCell>Geburtsdatum</TableCell>
-              <TableCell>Geschlecht</TableCell>
-              <TableCell>Scheinbarer Job</TableCell>
+              {Object.entries(headers).map(([key, header]) => (
+                <TableCell key={key}>
+                  <TableSortLabel
+                    active={sort.orderBy === key}
+                    direction={sort.order}
+                    onClick={() =>
+                      setSort({
+                        orderBy: key as keyof Superhero,
+                        order: sort.order === "asc" ? "desc" : "asc",
+                      })
+                    }
+                  >
+                    {header}
+                  </TableSortLabel>
+                </TableCell>
+              ))}
               <TableCell colSpan={1}></TableCell>
             </TableRow>
           </TableHead>
@@ -57,6 +84,12 @@ const SuperheroList: React.FC = () => {
                     .includes(filter.toLowerCase()) ||
                   superhero.alias.toLowerCase().includes(filter.toLowerCase())
                 );
+              })
+              .sort((a, b) => {
+                const compareResult = a[sort.orderBy]
+                  .toString()
+                  .localeCompare(b[sort.orderBy].toString());
+                return sort.order === "asc" ? compareResult : -compareResult;
               })
               .map((superhero) => (
                 <SuperheroListItem key={superhero.id} superhero={superhero} />
