@@ -6,8 +6,6 @@ import { Container, GlobalStyles, PaletteMode } from "@mui/material";
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Delete from "./domain/superhero/Delete";
-import Form from "./domain/superhero/Form";
 import SuperheroListPage from "./domain/superhero/SuperheroListPage";
 import SuperheroProvider from "./domain/superhero/SuperheroProvider";
 import SuperheroSinglePage from "./domain/superhero/SuperheroSinglePage";
@@ -17,6 +15,8 @@ import NotFound from "./navigation/NotFound";
 
 import { amber, grey, teal } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import AddNewSuperheroForm from "./domain/superhero/AddNewSuperheroForm";
+import ConfirmDeleteSuperhero from "./domain/superhero/ConfirmDeleteSuperhero";
 import ColorModeContext from "./navigation/ColorModeContext";
 import ToggleColorMode from "./navigation/ToggleColorMode";
 
@@ -103,9 +103,9 @@ const App: React.FC = () => {
               <Container sx={{ marginTop: "80px" }}>
                 <Routes>
                   <Route path="/list" element={<SuperheroListPage />} />
-                  <Route path="/edit/:id" element={<Form />} />
-                  <Route path="/delete/:id" element={<Delete />} />
-                  <Route path="/new" element={<Form />} />
+                  <Route path="/edit/:id" element={<AddNewSuperheroForm />} />
+                  <Route path="/delete/:id" element={<ConfirmDeleteSuperhero />} />
+                  <Route path="/new" element={<AddNewSuperheroForm />} />
                   <Route
                     path="/superhero/:id"
                     element={<SuperheroSinglePage />}

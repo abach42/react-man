@@ -25,7 +25,7 @@ const SuperheroSinglePage: React.FC = () => {
 
       <IconButton
           color="primary"
-          aria-label="edit"
+          aria-label="back"
           component={Link}
           to={`/`}
         >

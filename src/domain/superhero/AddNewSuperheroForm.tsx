@@ -5,7 +5,7 @@ import { Superhero } from "./Superhero";
 import { useForm } from "react-hook-form";
 import { Close, Save } from "@mui/icons-material";
 
-const Form: React.FC = () => {
+const AddNewSuperheroForm: React.FC = () => {
   const { register, handleSubmit, reset } = useForm<Superhero>({
     defaultValues: {
       realName: "",
@@ -89,7 +89,7 @@ const Form: React.FC = () => {
               <TextField fullWidth label="Email" {...register("user.email")} />
             </Grid>
             <Grid item xs={12}>
-              <Button variant="contained" color="primary" type="submit">
+              <Button variant="contained" color="primary" type="submit" sx={{marginRight: '10px'}}>
                 <Save />Speichern
               </Button>
               <Button variant="contained" color="secondary" onClick={handleClose}>
@@ -103,4 +103,4 @@ const Form: React.FC = () => {
   );
 };
 
-export default Form;
+export default AddNewSuperheroForm;

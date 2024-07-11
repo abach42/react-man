@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { AppBar, IconButton, Menu, MenuItem, Toolbar } from "@mui/material";
-import { Menu as MenuIcon } from "@mui/icons-material";
+import { Add, Error, List, Menu as MenuIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
 const Nav: React.FC = () => {
@@ -34,10 +34,38 @@ const Nav: React.FC = () => {
           onClose={handleMenuClose}
         >
           <MenuItem onClick={handleMenuClose}>
-            <Link to="/list">Liste</Link>
+            <IconButton
+              color="primary"
+              aria-label="list"
+              component={Link}
+              to={`/list`}
+            >
+              Liste &nbsp;
+              <List />
+            </IconButton>
           </MenuItem>
           <MenuItem onClick={handleMenuClose}>
-            <Link to="/form">Formular</Link>
+            <IconButton
+              color="primary"
+              aria-label="new"
+              component={Link}
+              to={`/new`}
+            >
+              Neu &nbsp;
+              <Add />
+            </IconButton>
+          </MenuItem>
+
+          <MenuItem onClick={handleMenuClose}>
+            <IconButton
+              color="primary"
+              aria-label="error"
+              component={Link}
+              to={`/abc`}
+            >
+              Error &nbsp;
+              <Error />
+            </IconButton>
           </MenuItem>
         </Menu>
       </Toolbar>

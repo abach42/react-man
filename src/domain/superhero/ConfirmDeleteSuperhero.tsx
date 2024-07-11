@@ -1,7 +1,8 @@
+import { Close, DeleteForever } from "@mui/icons-material";
 import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 
-const Delete: React.FC = () => {
+const ConfirmDeleteSuperhero: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
@@ -46,12 +47,12 @@ const Delete: React.FC = () => {
               color="secondary"
               onClick={handleCancel}
             >
-              Abbrechen
+              <Close />Abbrechen
             </Button>
           </Grid>
           <Grid item xs={6}>
             <Button variant="contained" color="error" onClick={handleDelete}>
-              Löschen
+              <DeleteForever />Löschen
             </Button>
           </Grid>
         </Grid>
@@ -60,4 +61,4 @@ const Delete: React.FC = () => {
   );
 };
 
-export default Delete;
+export default ConfirmDeleteSuperhero;

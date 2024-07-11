@@ -1,6 +1,7 @@
 import React from "react";
-import { Container } from "@mui/material";
+import { Container, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
+import { ArrowBackIos } from "@mui/icons-material";
 
 const NotFound: React.FC = () => {
   return (
@@ -9,7 +10,14 @@ const NotFound: React.FC = () => {
     >
       <h1>Ups ... Etwas ist schiefgelaufen</h1>
       <p>
-        <Link to="/">Weiter zur Startseite</Link>
+      <IconButton
+          color="primary"
+          aria-label="back"
+          component={Link}
+          to={`/`}
+        >
+          <ArrowBackIos />Weiter zur Startseite
+        </IconButton>
       </p>
     </Container>
   );

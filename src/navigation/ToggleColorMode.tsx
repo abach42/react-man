@@ -30,5 +30,5 @@ const ToggleColorMode: React.FC = () => {
     );
 }
 
-  export default ToggleColorMode;
+export default ToggleColorMode;
   
