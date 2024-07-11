@@ -29,7 +29,7 @@ const SuperheroList: React.FC = () => {
     orderBy: keyof Superhero;
     order: "asc" | "desc";
   }>({
-    orderBy: "alias",
+    orderBy: "realName",
     order: "asc",
   });
 
