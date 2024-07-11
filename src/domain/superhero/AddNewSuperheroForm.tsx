@@ -8,8 +8,9 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
+  CircularProgress,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Superhero } from "./Superhero";
 import { useForm, Controller } from "react-hook-form";
@@ -27,6 +28,8 @@ enum Gender {
 }
 
 const AddNewSuperheroForm: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
   const { control, register, handleSubmit, reset, setValue } =
     useForm<Superhero>({
       defaultValues: {
@@ -47,15 +50,18 @@ const AddNewSuperheroForm: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:3001/superheroes/${id}`)
+      (async () => {
+        await fetch(`http://localhost:3001/superheroes/${id}`)
         .then((response) => response.json())
         .then((data) => {
           reset(data);
           setValue("gender", data.gender);
           setValue("dateOfBirth", data.dateOfBirth);
         });
+        setIsLoading(false);
+      })();
     }
-  }, [id, reset, setValue]);
+  }, [id, reset, setValue, isLoading]);
 
   async function handleSave(formData: Superhero) {
     let url = "http://localhost:3001/superheroes";
@@ -78,7 +84,10 @@ const AddNewSuperheroForm: React.FC = () => {
     navigate("/list");
   }
 
-  return (
+ 
+
+  return ( 
+    isLoading ? <><CircularProgress /></> :
     <Card>
       <CardContent>
         <form onSubmit={handleSubmit(handleSave)}>

@@ -3,6 +3,7 @@ import axios from "axios";
 import SuperheroContext from "./SuperheroContext";
 import ErrorMessage from "../error/ErrorMessage";
 import { Superhero } from "./Superhero";
+import { CircularProgress } from "@mui/material";
 
 type Props = {
   id: string | null;
@@ -76,7 +77,7 @@ const SuperheroLoader: React.FC<Props> = ({ id, children }) => {
     return <ErrorMessage message={error} />;
   }
 
-  return isLoading ? <div>Loading...</div> :  <>{children}</>;
+  return isLoading ? <><CircularProgress /></> :  <>{children}</>;
 };
 
 export default SuperheroLoader;
