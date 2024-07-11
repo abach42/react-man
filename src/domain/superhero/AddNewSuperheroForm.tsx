@@ -48,6 +48,7 @@ const AddNewSuperheroForm: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [isLoading, setIsLoading] = useState(id ? true: false);
 
+  //todo move to SuperheroLoader
   useEffect(() => {
     if (id) {
       (async () => {
