@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const SuperheroListPage: React.FC = () => {
   return (
     <>
-      <h1>List of superheroes</h1>
+      <h1 color="primary">List of superheroes</h1>
       <SuperheroLoader id={null}>
         <SuperheroList />
       </SuperheroLoader>

@@ -1,5 +1,5 @@
 import { Delete, Edit, ZoomIn } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import { IconButton, TableCell, TableRow } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Superhero } from "./Superhero";
 
@@ -9,13 +9,13 @@ type SuperheroProps = {
 
 const SuperheroListItem: React.FC<SuperheroProps> = ({ superhero }) => {
   return (
-    <tr>
-      <td>{superhero.realName}</td>
-      <td>{superhero.alias}</td>
-      <td>{superhero.dateOfBirth}</td>
-      <td>{superhero.gender}</td>
-      <td>{superhero.occupation}</td>
-      <td>
+    <TableRow>
+      <TableCell>{superhero.realName}</TableCell>
+      <TableCell>{superhero.alias}</TableCell>
+      <TableCell>{superhero.dateOfBirth}</TableCell>
+      <TableCell>{superhero.gender}</TableCell>
+      <TableCell>{superhero.occupation}</TableCell>
+      <TableCell>
         <IconButton
           aria-label="edit"
           component={Link}
@@ -23,8 +23,7 @@ const SuperheroListItem: React.FC<SuperheroProps> = ({ superhero }) => {
         >
           <ZoomIn />
         </IconButton>
-      </td>
-      <td>
+
         <IconButton
           aria-label="edit"
           component={Link}
@@ -32,8 +31,7 @@ const SuperheroListItem: React.FC<SuperheroProps> = ({ superhero }) => {
         >
           <Edit />
         </IconButton>
-      </td>
-      <td>
+
         <IconButton
           aria-label="delete"
           component={Link}
@@ -41,9 +39,8 @@ const SuperheroListItem: React.FC<SuperheroProps> = ({ superhero }) => {
         >
           <Delete />
         </IconButton>
-      </td>
-      
-    </tr>
+      </TableCell>
+    </TableRow>
   );
 };
 

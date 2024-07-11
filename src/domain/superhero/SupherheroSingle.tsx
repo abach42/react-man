@@ -1,3 +1,8 @@
+import { Cake, Email, Group, HistoryEdu, Wc, Work } from "@mui/icons-material"; // Use Material Icons
+import { Avatar, CardHeader, Grid, Typography } from "@mui/material";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import { red } from "@mui/material/colors";
 import { useContext } from "react";
 import SuperheroContext from "./SuperheroContext";
 
@@ -8,17 +13,53 @@ const SuperheroSingle: React.FC = () => {
     return <></>;
   }
 
+  const letter = superhero.alias.charAt(0).toUpperCase();
+
   return (
-    <div>
-      <em>Name</em> {superhero.realName} <br />
-      <em>Alias</em> {superhero.alias} <br />
-      <em>Geburtsdatum</em> {superhero.dateOfBirth} <br />
-      <em>Geschlecht</em> {superhero.gender} <br />
-      <em>Scheinbarer Job</em> {superhero.occupation} <br />
-      <em>Lebensgeschichte</em> {superhero.originStory} <br />
-      <em>Nutzer:innen Gruppe</em> {superhero.user.role} <br />
-      <em>Nutzer:innen E-Mail:innenden</em> {superhero.user.email} <br />
-    </div>
+    <Card sx={{ maxWidth: 345 }}>
+      <CardHeader
+        avatar={
+          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+            {letter}
+          </Avatar>
+        }
+        title={superhero.alias}
+        subheader={superhero.realName}
+      />
+      <CardContent>
+        <Grid container spacing={2} alignItems="flex-start">
+          <Grid item xs={6}>
+            <Typography variant="body2" align="left">
+              <Cake /> {superhero.dateOfBirth}
+            </Typography>
+            <Typography variant="body2" align="left">
+              <Wc /> {superhero.gender}
+            </Typography>
+            <Typography variant="body2" align="left">
+              <Work /> {superhero.occupation}
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="body2" align="left">
+              <HistoryEdu /> {superhero.originStory}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="body2" align="left">
+              <Group /> {superhero.user.role}
+            </Typography>
+            {superhero.user.email && (
+              <Typography
+                variant="body2"
+                align="left"
+              >
+                <Email /> {superhero.user.email}
+              </Typography>
+            )}
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
   );
 };
 

@@ -1,6 +1,14 @@
 import { useContext } from "react";
 import SuperheroContext from "./SuperheroContext";
 import SuperheroListItem from "./SuperheroListItem";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 
 const SuperheroList: React.FC = () => {
   const [superheroes] = useContext(SuperheroContext);
@@ -10,23 +18,25 @@ const SuperheroList: React.FC = () => {
   }
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Alias</th>
-          <th>Geburtsdatum</th>
-          <th>Geschlecht</th>
-          <th>Scheinbarer Job</th>
-          <th colSpan={2}></th>
-        </tr>
-      </thead>
-      <tbody>
-        {superheroes.map((superhero) => (
-          <SuperheroListItem key={superhero.id} superhero={superhero} />
-        ))}
-      </tbody>
-    </table>
+    <Paper>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>Alias</TableCell>
+            <TableCell>Geburtsdatum</TableCell>
+            <TableCell>Geschlecht</TableCell>
+            <TableCell>Scheinbarer Job</TableCell>
+            <TableCell colSpan={1}></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {superheroes.map((superhero) => (
+            <SuperheroListItem key={superhero.id} superhero={superhero} />
+          ))}
+        </TableBody>
+      </Table>
+    </Paper>
   );
 };
 
