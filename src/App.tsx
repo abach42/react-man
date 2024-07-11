@@ -49,7 +49,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
           primary: customReactBlue,
           divider: teal[400],
           common: {
-            white: customReactBlue.main,
+            white: grey[600],
           },
           background: {
             default: grey[800],
@@ -86,6 +86,9 @@ const App: React.FC = () => {
       <GlobalStyles
         styles={{
           body: { backgroundColor: theme.palette.common.white },
+          h1: {
+            color: theme.palette.text.primary, 
+          },
         }}
       />
       <ThemeProvider theme={theme}>
@@ -94,7 +97,6 @@ const App: React.FC = () => {
             <img src={logo} className="App-logo" alt="logo" />
             <ToggleColorMode />
           </header>
-          <h1 color="primary">foo</h1>
           <main>
             <SuperheroProvider>
               <Nav />

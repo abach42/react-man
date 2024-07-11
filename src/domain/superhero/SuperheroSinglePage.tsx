@@ -1,3 +1,5 @@
+import { ArrowBackIos } from "@mui/icons-material";
+import { Box, IconButton } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import SuperheroLoader from "./SuperheroLoader";
 import SuperheroSingle from "./SupherheroSingle";
@@ -9,13 +11,26 @@ const SuperheroSinglePage: React.FC = () => {
   return (
     <>
       <h1>Superheld:in</h1>
-      <SuperheroLoader id={id} >
-              <SuperheroSingle />
+      <SuperheroLoader id={id}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <SuperheroSingle />
+        </Box>
       </SuperheroLoader>
 
-      <p>
-        <Link to="/">Weiter zur Startseite</Link>
-      </p>
+      <IconButton
+          color="primary"
+          aria-label="edit"
+          component={Link}
+          to={`/`}
+        >
+          <ArrowBackIos />Weiter zur Startseite
+        </IconButton>
     </>
   );
 };
