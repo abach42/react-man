@@ -28,25 +28,25 @@ enum Gender {
 }
 
 const AddNewSuperheroForm: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
+  
   const { control, register, handleSubmit, reset, setValue } =
-    useForm<Superhero>({
-      defaultValues: {
-        realName: "",
-        alias: "",
-        dateOfBirth: "",
-        gender: Gender.Male,
-        occupation: "",
-        originStory: "",
-        user: {
-          email: "",
-          role: "USER",
-        },
+  useForm<Superhero>({
+    defaultValues: {
+      realName: "",
+      alias: "",
+      dateOfBirth: "",
+      gender: Gender.Male,
+      occupation: "",
+      originStory: "",
+      user: {
+        email: "",
+        role: "USER",
       },
-    });
+    },
+  });
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
+  const [isLoading, setIsLoading] = useState(id ? true: false);
 
   useEffect(() => {
     if (id) {
@@ -60,8 +60,6 @@ const AddNewSuperheroForm: React.FC = () => {
         });
         setIsLoading(false);
       })();
-    } else {
-      setIsLoading(false);
     }
   }, [id, reset, setValue, isLoading]);
 
