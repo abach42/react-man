@@ -1,29 +1,28 @@
-import { Container, PaletteMode } from "@mui/material";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import { Container, GlobalStyles, PaletteMode } from "@mui/material";
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
+import Delete from "./domain/superhero/Delete";
+import Form from "./domain/superhero/Form";
 import SuperheroListPage from "./domain/superhero/SuperheroListPage";
 import SuperheroProvider from "./domain/superhero/SuperheroProvider";
 import SuperheroSinglePage from "./domain/superhero/SuperheroSinglePage";
 import logo from "./logo.svg";
 import Nav from "./navigation/Nav";
 import NotFound from "./navigation/NotFound";
-import Form from "./domain/superhero/Form";
-import Delete from "./domain/superhero/Delete";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
 
+import { amber, grey, teal } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { amber, blue, deepOrange, grey, teal } from "@mui/material/colors";
 import ColorModeContext from "./navigation/ColorModeContext";
 import ToggleColorMode from "./navigation/ToggleColorMode";
 
 const customReactBlue = {
-  main: '#00d8ff',
+  main: "#00d8ff",
 };
-
 
 const getDesignTokens = (mode: PaletteMode) => ({
   palette: {
@@ -33,6 +32,9 @@ const getDesignTokens = (mode: PaletteMode) => ({
           // palette values for light mode
           primary: amber,
           divider: amber[200],
+          common: {
+            white: amber[50],
+          },
           text: {
             primary: grey[900],
             secondary: grey[800],
@@ -46,6 +48,9 @@ const getDesignTokens = (mode: PaletteMode) => ({
           // palette values for dark mode
           primary: customReactBlue,
           divider: teal[400],
+          common: {
+            white: customReactBlue.main,
+          },
           background: {
             default: grey[800],
             paper: grey[800],
@@ -73,13 +78,16 @@ const App: React.FC = () => {
     []
   );
 
-  console.log(mode);
-
   // Update the theme only if the mode changes
   const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
   return (
     <ColorModeContext.Provider value={colorMode}>
+      <GlobalStyles
+        styles={{
+          body: { backgroundColor: theme.palette.common.white },
+        }}
+      />
       <ThemeProvider theme={theme}>
         <div className="App">
           <header className="App-header">
