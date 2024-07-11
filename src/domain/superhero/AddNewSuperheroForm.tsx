@@ -29,35 +29,35 @@ enum Gender {
 
 const AddNewSuperheroForm: React.FC = () => {
   const { control, register, handleSubmit, reset, setValue } =
-  useForm<Superhero>({
-    defaultValues: {
-      realName: "",
-      alias: "",
-      dateOfBirth: "",
-      gender: Gender.Male,
-      occupation: "",
-      originStory: "",
-      user: {
-        email: "",
-        role: "USER",
+    useForm<Superhero>({
+      defaultValues: {
+        realName: "",
+        alias: "",
+        dateOfBirth: "",
+        gender: Gender.Male,
+        occupation: "",
+        originStory: "",
+        user: {
+          email: "",
+          role: "USER",
+        },
       },
-    },
-  });
+    });
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const [isLoading, setIsLoading] = useState(id ? true: false);
+  const [isLoading, setIsLoading] = useState(id ? true : false);
 
   //todo move to SuperheroLoader
   useEffect(() => {
     if (id) {
       (async () => {
         await fetch(`http://localhost:3001/superheroes/${id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          reset(data);
-          setValue("gender", data.gender);
-          setValue("dateOfBirth", data.dateOfBirth);
-        });
+          .then((response) => response.json())
+          .then((data) => {
+            reset(data);
+            setValue("gender", data.gender);
+            setValue("dateOfBirth", data.dateOfBirth);
+          });
         setIsLoading(false);
       })();
     }
@@ -84,8 +84,11 @@ const AddNewSuperheroForm: React.FC = () => {
     navigate("/list");
   }
 
-  return ( 
-    isLoading ? <><CircularProgress /></> :
+  return isLoading ? (
+    <>
+      <CircularProgress />
+    </>
+  ) : (
     <Card>
       <CardContent>
         <form onSubmit={handleSubmit(handleSave)}>
@@ -109,7 +112,10 @@ const AddNewSuperheroForm: React.FC = () => {
                     render={({ field }) => (
                       <DatePicker
                         label="Date of Birth"
-                        value={dayjs(field.value)}
+                        value={field.value !== "" ? dayjs(field.value) : null}
+                        slotProps={{
+                          field: { clearable: true, onClear: () => true },
+                        }}
                         onChange={(newValue: Dayjs | null) => {
                           if (newValue !== null) {
                             field.onChange(newValue.format("YYYY-MM-DD"));
