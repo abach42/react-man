@@ -14,19 +14,6 @@
       }
     },
     {
-      "id": "2",
-      "alias": "Captain Courageous",
-      "realName": "Chris Courage",
-      "dateOfBirth": "1980-05-15",
-      "gender": "Male",
-      "occupation": "Defender of Justice",
-      "originStory": "Chris Courage was a regular citizen until a fateful accident imbued him with superhuman courage.",
-      "user": {
-        "email": "chris@example.com",
-        "role": "USER"
-      }
-    },
-    {
       "id": "3",
       "alias": "Speedster",
       "realName": "Samantha Swift",

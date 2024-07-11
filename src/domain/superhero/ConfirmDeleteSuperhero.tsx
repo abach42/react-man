@@ -17,6 +17,10 @@ const ConfirmDeleteSuperhero: React.FC = () => {
       await fetch(url, {
         method,
         headers: { "content-type": "application/json" },
+      }).then((response) => {
+        if (response.ok) {
+          console.log(response);
+        }
       });
       navigate("/list"); // Redirect after successful deletion
     })();
@@ -47,12 +51,14 @@ const ConfirmDeleteSuperhero: React.FC = () => {
               color="secondary"
               onClick={handleCancel}
             >
-              <Close />Abbrechen
+              <Close />
+              Abbrechen
             </Button>
           </Grid>
           <Grid item xs={6}>
             <Button variant="contained" color="error" onClick={handleDelete}>
-              <DeleteForever />Löschen
+              <DeleteForever />
+              Löschen
             </Button>
           </Grid>
         </Grid>
