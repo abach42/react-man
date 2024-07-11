@@ -1,5 +1,6 @@
 import { Delete, Edit, ZoomIn } from "@mui/icons-material";
 import { IconButton, TableCell, TableRow } from "@mui/material";
+import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { Superhero } from "./Superhero";
 
@@ -12,7 +13,7 @@ const SuperheroListItem: React.FC<SuperheroProps> = ({ superhero }) => {
     <TableRow>
       <TableCell>{superhero.realName}</TableCell>
       <TableCell>{superhero.alias}</TableCell>
-      <TableCell>{superhero.dateOfBirth}</TableCell>
+      <TableCell>{dayjs(superhero.dateOfBirth).format("DD.MM.YYYY")}</TableCell>
       <TableCell>{superhero.gender}</TableCell>
       <TableCell>{superhero.occupation}</TableCell>
       <TableCell>

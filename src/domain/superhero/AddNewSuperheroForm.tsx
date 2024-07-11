@@ -15,26 +15,33 @@ import { Superhero } from "./Superhero";
 import { useForm, Controller } from "react-hook-form";
 import { Close, Save } from "@mui/icons-material";
 
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs, { Dayjs } from "dayjs";
+
 enum Gender {
   Male = "Male",
   Female = "Female",
 }
 
 const AddNewSuperheroForm: React.FC = () => {
-  const { control, register, handleSubmit, reset, setValue } = useForm<Superhero>({
-    defaultValues: {
-      realName: "",
-      alias: "",
-      dateOfBirth: "",
-      gender: Gender.Male,
-      occupation: "",
-      originStory: "",
-      user: {
-        email: "",
-        role: "USER",
+  const { control, register, handleSubmit, reset, setValue } =
+    useForm<Superhero>({
+      defaultValues: {
+        realName: "",
+        alias: "",
+        dateOfBirth: "",
+        gender: Gender.Male,
+        occupation: "",
+        originStory: "",
+        user: {
+          email: "",
+          role: "USER",
+        },
       },
-    },
-  });
+    });
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
@@ -45,6 +52,7 @@ const AddNewSuperheroForm: React.FC = () => {
         .then((data) => {
           reset(data);
           setValue("gender", data.gender);
+          setValue("dateOfBirth", data.dateOfBirth);
         });
     }
   }, [id, reset, setValue]);
@@ -76,13 +84,38 @@ const AddNewSuperheroForm: React.FC = () => {
         <form onSubmit={handleSubmit(handleSave)}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField fullWidth label="Real Name" {...register("realName")} />
+              <TextField
+                fullWidth
+                label="Real Name"
+                {...register("realName")}
+              />
             </Grid>
             <Grid item xs={12}>
               <TextField fullWidth label="Alias" {...register("alias")} />
             </Grid>
             <Grid item xs={6}>
-              <TextField fullWidth label="Date of Birth" {...register("dateOfBirth")} />
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoContainer components={["DatePicker"]}>
+                  <Controller
+                    name="dateOfBirth"
+                    control={control}
+                    render={({ field }) => (
+                      <DatePicker
+                        label="Date of Birth"
+                        value={dayjs(field.value)}
+                        onChange={(newValue: Dayjs | null) => {
+                          if (newValue !== null) {
+                            field.onChange(newValue.format("YYYY-MM-DD"));
+                          }
+                        }}
+                        openTo="year"
+                        views={["year", "month", "day"]}
+                        format="DD.MM.YYYY"
+                      />
+                    )}
+                  />
+                </DemoContainer>
+              </LocalizationProvider>
             </Grid>
             <Grid item xs={6}>
               <FormControl fullWidth>
@@ -100,7 +133,11 @@ const AddNewSuperheroForm: React.FC = () => {
               </FormControl>
             </Grid>
             <Grid item xs={6}>
-              <TextField fullWidth label="Occupation" {...register("occupation")} />
+              <TextField
+                fullWidth
+                label="Occupation"
+                {...register("occupation")}
+              />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -115,10 +152,19 @@ const AddNewSuperheroForm: React.FC = () => {
               <TextField fullWidth label="Email" {...register("user.email")} />
             </Grid>
             <Grid item xs={12}>
-              <Button variant="contained" color="primary" type="submit" sx={{ marginRight: "10px" }}>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                sx={{ marginRight: "10px" }}
+              >
                 <Save /> Speichern
               </Button>
-              <Button variant="contained" color="secondary" onClick={handleClose}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleClose}
+              >
                 <Close /> Abbrechen
               </Button>
             </Grid>

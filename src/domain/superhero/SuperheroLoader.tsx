@@ -5,7 +5,7 @@ import ErrorMessage from "../error/ErrorMessage";
 import { Superhero } from "./Superhero";
 
 type Props = {
-  id: number | null;
+  id: string | null;
   children: React.ReactNode
 };
 
@@ -29,7 +29,7 @@ class ListAbility extends RequestStrategy {
 }
 
 class SingleAbilty extends RequestStrategy {
-  constructor(private id: number) {
+  constructor(private id: string) {
     super();
   }
 
@@ -48,7 +48,7 @@ const SuperheroLoader: React.FC<Props> = ({ id, children }) => {
   let strategy = new ListAbility();
 
   if (id !== null) {
-    strategy = new SingleAbilty(id as number);
+    strategy = new SingleAbilty(id as string);
   }
 
   useEffect(() => {

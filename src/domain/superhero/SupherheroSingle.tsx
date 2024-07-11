@@ -3,6 +3,7 @@ import { Avatar, CardHeader, Grid, Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { red } from "@mui/material/colors";
+import dayjs from "dayjs";
 import { useContext } from "react";
 import SuperheroContext from "./SuperheroContext";
 
@@ -30,7 +31,7 @@ const SuperheroSingle: React.FC = () => {
         <Grid container spacing={2} alignItems="flex-start">
           <Grid item xs={6}>
             <Typography variant="body2" align="left">
-              <Cake /> {superhero.dateOfBirth}
+              <Cake /> {dayjs(superhero.dateOfBirth).format("DD.MM.YYYY")}
             </Typography>
             <Typography variant="body2" align="left">
               <Wc /> {superhero.gender}
@@ -49,10 +50,7 @@ const SuperheroSingle: React.FC = () => {
               <Group /> {superhero.user.role}
             </Typography>
             {superhero.user.email && (
-              <Typography
-                variant="body2"
-                align="left"
-              >
+              <Typography variant="body2" align="left">
                 <Email /> {superhero.user.email}
               </Typography>
             )}

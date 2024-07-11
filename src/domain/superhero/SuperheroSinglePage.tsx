@@ -6,12 +6,12 @@ import SuperheroSingle from "./SupherheroSingle";
 
 const SuperheroSinglePage: React.FC = () => {
   const params = useParams<{ id: string | undefined }>();
-  const id = params.id ? Number(params.id) : null;
-
+  const idOrNull: string | null = params.id ?? null;
+  
   return (
     <>
       <h1>Superheld:in</h1>
-      <SuperheroLoader id={id}>
+      <SuperheroLoader id={idOrNull}>
         <Box
           sx={{
             display: "flex",
