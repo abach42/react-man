@@ -60,6 +60,8 @@ const AddNewSuperheroForm: React.FC = () => {
         });
         setIsLoading(false);
       })();
+    } else {
+      setIsLoading(false);
     }
   }, [id, reset, setValue, isLoading]);
 
