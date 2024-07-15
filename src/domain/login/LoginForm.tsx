@@ -8,10 +8,12 @@ const LoginForm: React.FC = () => {
   const [, setToken] = useContext(AuthContext);
 
   const login = async (username: string, password: string): Promise<string | null> => {
-    let url = `${process.env.REACT_APP_LOGIN_SERVER}/api/login`;
+    let url = `${process.env.REACT_APP_API_SERVER}/api/v1/login`;
     
     const credentials = `${username}:${password}`; // Use colon ':' to separate username and password
     const base64Credentials = btoa(credentials); // Base64 encode credentials
+    
+    console.log(credentials);
     
     const headers = {
       "Authorization": `Basic ${base64Credentials}`,

@@ -21,24 +21,28 @@ abstract class RequestStrategy {
 
   protected async requestSuperheroes(
     url: string
-  ): Promise<Superhero | Superhero[]> {
+  ): Promise<{ superheroes: Superhero[] }> {
     console.log(this.token);
-
-    const { data } = await axios.get<Superhero | Superhero[]>(url, {
+  
+    const { data } = await axios.get<{ superheroes: Superhero[] }>(url, {
       headers: {
         Authorization: `Bearer ${this.token}`,
-         "Content-Type": "application/json",
+        "Content-Type": "application/json",
       },
     });
+  
+    console.log(data);
     return data;
   }
 }
 
 class ListAbility extends RequestStrategy {
   async fetchSuperheroes(): Promise<Superhero[]> {
-    return (await this.requestSuperheroes(
-      `${process.env.REACT_APP_API_SERVER}/api/superheroes`
-    )) as Superhero[];
+    const {superheroes} = (await this.requestSuperheroes(
+      `${process.env.REACT_APP_API_SERVER}/api/v1/superheroes`
+    ));
+
+    return superheroes as Superhero[];
   }
 }
 
@@ -48,10 +52,10 @@ class SingleAbilty extends RequestStrategy {
   }
 
   async fetchSuperheroes(): Promise<Superhero[]> {
-    const heroes = (await this.requestSuperheroes(
-      `${process.env.REACT_APP_API_SERVER}/api/superheroes/${this.id}`
-    )) as Superhero;
-    return [heroes];
+    const {superheroes}  = (await this.requestSuperheroes(
+      `${process.env.REACT_APP_API_SERVER}/api/v1/superheroes/${this.id}`
+    )) ;
+    return superheroes as Superhero[];
   }
 }
 
