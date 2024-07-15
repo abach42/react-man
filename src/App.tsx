@@ -4,10 +4,11 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { Container, GlobalStyles, PaletteMode } from "@mui/material";
 import React from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import SuperheroListPage from "./domain/superhero/SuperheroListPage";
 import SuperheroProvider from "./domain/superhero/SuperheroProvider";
+import AuthProvider from "./domain/login/AuthProvider";
 import SuperheroSinglePage from "./domain/superhero/SuperheroSinglePage";
 import logo from "./logo.svg";
 import Nav from "./navigation/Nav";
@@ -19,6 +20,7 @@ import AddNewSuperheroForm from "./domain/superhero/AddNewSuperheroForm";
 import ConfirmDeleteSuperhero from "./domain/superhero/ConfirmDeleteSuperhero";
 import ColorModeContext from "./navigation/ColorModeContext";
 import ToggleColorMode from "./navigation/ToggleColorMode";
+import LoginForm from "./domain/login/LoginForm";
 
 const customReactBlue = {
   main: "#00d8ff",
@@ -87,7 +89,7 @@ const App: React.FC = () => {
         styles={{
           body: { backgroundColor: theme.palette.common.white },
           h1: {
-            color: theme.palette.text.primary, 
+            color: theme.palette.text.primary,
           },
         }}
       />
@@ -98,23 +100,29 @@ const App: React.FC = () => {
             <ToggleColorMode />
           </header>
           <main>
-            <SuperheroProvider>
-              <Nav />
-              <Container sx={{ marginTop: "80px" }}>
-                <Routes>
-                  <Route path="/list" element={<SuperheroListPage />} />
-                  <Route path="/edit/:id" element={<AddNewSuperheroForm />} />
-                  <Route path="/delete/:id" element={<ConfirmDeleteSuperhero />} />
-                  <Route path="/new" element={<AddNewSuperheroForm />} />
-                  <Route
-                    path="/superhero/:id"
-                    element={<SuperheroSinglePage />}
-                  />
-                  <Route path="/" element={<Navigate to="/list" />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Container>
-            </SuperheroProvider>
+            <AuthProvider>
+              <SuperheroProvider>
+                <Nav />
+                <Container sx={{ marginTop: "80px" }}>
+                  <Routes>
+                    <Route path="/list" element={<SuperheroListPage />} />
+                    <Route path="/edit/:id" element={<AddNewSuperheroForm />} />
+                    <Route
+                      path="/delete/:id"
+                      element={<ConfirmDeleteSuperhero />}
+                    />
+                    <Route path="/new" element={<AddNewSuperheroForm />} />
+                    <Route
+                      path="/superhero/:id"
+                      element={<SuperheroSinglePage />}
+                    />
+                    {/*<Route path="/" element={<Navigate to="/list" />} />*/}
+                    <Route path="/" element={<LoginForm />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </Container>
+              </SuperheroProvider>
+            </AuthProvider>
           </main>
         </div>
       </ThemeProvider>
