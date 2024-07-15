@@ -38,11 +38,11 @@ abstract class RequestStrategy {
 
 class ListAbility extends RequestStrategy {
   async fetchSuperheroes(): Promise<Superhero[]> {
-    const {superheroes} = (await this.requestSuperheroes(
+    const { superheroes } = (await this.requestSuperheroes(
       `${process.env.REACT_APP_API_SERVER}/api/v1/superheroes`
     )) as { superheroes: Superhero[] };
 
-    return superheroes as Superhero[];
+    return superheroes;
   }
 }
 
@@ -56,7 +56,7 @@ class SingleAbilty extends RequestStrategy {
       `${process.env.REACT_APP_API_SERVER}/api/v1/superheroes/${this.id}`
     )) as Superhero;
 
-    return [ superheroes ] as Superhero[];
+    return [ superheroes ];
   }
 }
 
