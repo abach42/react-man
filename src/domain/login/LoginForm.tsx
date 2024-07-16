@@ -13,7 +13,7 @@ const LoginForm: React.FC = () => {
     const credentials = `${username}:${password}`; // Use colon ':' to separate username and password
     const base64Credentials = btoa(credentials); // Base64 encode credentials
     
-    console.log(credentials);
+    //console.log(credentials);
     
     const headers = {
       "Authorization": `Basic ${base64Credentials}`,
@@ -25,11 +25,11 @@ const LoginForm: React.FC = () => {
     
       if (response.status === 200) {
         // Login successful, process the response data
-        console.log("Login successful!", response.data);
+        //console.log("Login successful!", response.data);
 
         const token = response.data;
         setToken(token);
-        console.log("Login successful! Token:", token);
+        //console.log("Login successful! Token:", token);
         return token;
 
       } else {

@@ -1,8 +1,8 @@
 import { Fab } from "@mui/material";
-import SuperheroList from "./SuperheroList";
-import SuperheroLoader from "./SuperheroLoader";
+import SuperheroLoader from "../SuperheroLoader";
 import { Add } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import SuperheroList from "./SuperheroList";
 
 const SuperheroListPage: React.FC = () => {
   return (

@@ -6,10 +6,10 @@ import { Container, GlobalStyles, PaletteMode } from "@mui/material";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import SuperheroListPage from "./domain/superhero/SuperheroListPage";
+import SuperheroListPage from "./domain/superhero/pages/SuperheroListPage";
 import SuperheroProvider from "./domain/superhero/SuperheroProvider";
 import AuthProvider from "./domain/login/AuthProvider";
-import SuperheroSinglePage from "./domain/superhero/SuperheroSinglePage";
+import SuperheroSinglePage from "./domain/superhero/pages/SuperheroSinglePage";
 import logo from "./logo.svg";
 import Nav from "./navigation/Nav";
 import NotFound from "./navigation/NotFound";
@@ -17,6 +17,7 @@ import NotFound from "./navigation/NotFound";
 import { amber, grey, teal } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AddNewSuperheroForm from "./domain/superhero/AddNewSuperheroForm";
+import EditSuperhero from "./domain/superhero/EditSuperheroPage";
 import ConfirmDeleteSuperhero from "./domain/superhero/ConfirmDeleteSuperhero";
 import ColorModeContext from "./navigation/ColorModeContext";
 import ToggleColorMode from "./navigation/ToggleColorMode";
@@ -106,7 +107,7 @@ const App: React.FC = () => {
                 <Container sx={{ marginTop: "80px" }}>
                   <Routes>
                     <Route path="/list" element={<SuperheroListPage />} />
-                    <Route path="/edit/:id" element={<AddNewSuperheroForm />} />
+                    <Route path="/edit/:id" element={<EditSuperhero />} />
                     <Route
                       path="/delete/:id"
                       element={<ConfirmDeleteSuperhero />}

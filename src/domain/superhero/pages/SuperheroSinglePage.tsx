@@ -1,7 +1,7 @@
 import { ArrowBackIos } from "@mui/icons-material";
 import { Box, IconButton } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
-import SuperheroLoader from "./SuperheroLoader";
+import SuperheroLoader from "../SuperheroLoader";
 import SuperheroSingle from "./SupherheroSingle";
 
 const SuperheroSinglePage: React.FC = () => {
@@ -27,9 +27,9 @@ const SuperheroSinglePage: React.FC = () => {
           color="primary"
           aria-label="back"
           component={Link}
-          to={`/`}
+          to={`/list`}
         >
-          <ArrowBackIos />Weiter zur Startseite
+          <ArrowBackIos />Zurück zur Liste
         </IconButton>
     </>
   );

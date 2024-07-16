@@ -5,7 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import { red } from "@mui/material/colors";
 import dayjs from "dayjs";
 import { useContext } from "react";
-import SuperheroContext from "./SuperheroContext";
+import SuperheroContext from "../SuperheroContext";
 
 const SuperheroSingle: React.FC = () => {
   const [[superhero] = []] = useContext(SuperheroContext);

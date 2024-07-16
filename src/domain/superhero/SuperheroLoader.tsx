@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
-import SuperheroContext from "./SuperheroContext";
-import ErrorMessage from "../error/ErrorMessage";
-import { Superhero } from "./Superhero";
 import { CircularProgress } from "@mui/material";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import ErrorMessage from "../../error/ErrorMessage";
 import AuthContext from "../login/AuthContext";
+import { Superhero } from "./Superhero";
+import SuperheroContext from "./SuperheroContext";
 
 type Props = {
   id: string | null;
@@ -19,10 +19,10 @@ abstract class RequestStrategy {
   }
   public abstract fetchSuperheroes(): Promise<Superhero[]>;
 
-  protected async requestSuperheroes(
+  protected async sendRequestSuperheroes(
     url: string
   ): Promise<{ superheroes: Superhero[] } | Superhero > {
-    console.log(this.token);
+    //console.log(this.token);
   
     const { data } = await axios.get<{ superheroes: Superhero[] }>(url, {
       headers: {
@@ -38,7 +38,7 @@ abstract class RequestStrategy {
 
 class ListAbility extends RequestStrategy {
   async fetchSuperheroes(): Promise<Superhero[]> {
-    const { superheroes } = (await this.requestSuperheroes(
+    const { superheroes } = (await this.sendRequestSuperheroes(
       `${process.env.REACT_APP_API_SERVER}/api/v1/superheroes`
     )) as { superheroes: Superhero[] };
 
@@ -52,7 +52,7 @@ class SingleAbilty extends RequestStrategy {
   }
 
   async fetchSuperheroes(): Promise<Superhero[]> {
-    const superheroes  = (await this.requestSuperheroes(
+    const superheroes  = (await this.sendRequestSuperheroes(
       `${process.env.REACT_APP_API_SERVER}/api/v1/superheroes/${this.id}`
     )) as Superhero;
 
@@ -71,10 +71,14 @@ const SuperheroLoader: React.FC<Props> = ({ id, children }) => {
     strategy = new SingleAbilty(id as string, token);
   }
 
+
+
   useEffect(() => {
     (async () => {
       try {
         const superheroes = await strategy.fetchSuperheroes();
+
+        console.log(superheroes);
 
         if (!superheroes) {
           throw new Error("result was empty");

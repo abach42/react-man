@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import { Superhero } from "./Superhero";
-import SuperheroListPage from "./SuperheroListPage";
+import SuperheroListPage from "./pages/SuperheroListPage";
 
 // Mock SuperheroLoader to avoid external data fetching
 jest.mock("./SuperheroLoader", () => {

@@ -9,9 +9,9 @@ import {
   TextField,
 } from "@mui/material";
 import { ChangeEvent, useContext, useState } from "react";
-import SuperheroContext from "./SuperheroContext";
+import SuperheroContext from "../SuperheroContext";
+import { Superhero } from "../Superhero";
 import SuperheroListItem from "./SuperheroListItem";
-import { Superhero } from "./Superhero";
 
 const SuperheroList: React.FC = () => {
   const [superheroes] = useContext(SuperheroContext);

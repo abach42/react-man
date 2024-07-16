@@ -19,7 +19,7 @@ const ConfirmDeleteSuperhero: React.FC = () => {
         headers: { "content-type": "application/json" },
       }).then((response) => {
         if (response.ok) {
-          console.log(response);
+          //console.log(response);
         }
       });
       navigate("/list"); // Redirect after successful deletion

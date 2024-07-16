@@ -1,33 +1,35 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  TextField,
-  Select,
-  MenuItem,
-  InputLabel,
-  FormControl,
-  CircularProgress,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Superhero } from "./Superhero";
-import { useForm, Controller } from "react-hook-form";
 import { Close, Save } from "@mui/icons-material";
+import {
+    Button,
+    Card,
+    CardContent,
+    FormControl,
+    Grid,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField
+} from "@mui/material";
+import React, { useContext, useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { Superhero } from "./Superhero";
 
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs, { Dayjs } from "dayjs";
+import SuperheroContext from "./SuperheroContext";
 
 enum Gender {
   Male = "Male",
   Female = "Female",
 }
 
-const AddNewSuperheroForm: React.FC = () => {
+const EditSuperhero: React.FC = () => {
+  const [[superhero] = []] = useContext(SuperheroContext);
+
   const { control, register, handleSubmit, reset, setValue } =
     useForm<Superhero>({
       defaultValues: {
@@ -44,51 +46,21 @@ const AddNewSuperheroForm: React.FC = () => {
       },
     });
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
-  const [isLoading, setIsLoading] = useState(id ? true : false);
 
-  //todo move to SuperheroLoader
   useEffect(() => {
-    if (id) {
-      (async () => {
-        await fetch(`${process.env.REACT_APP_API_SERVER}/api/v1/superheroes/${id}`)
-          .then((response) => response.json())
-          .then((data) => {
-            reset(data);
-            setValue("gender", data.gender);
-            setValue("dateOfBirth", data.dateOfBirth);
-          });
-        setIsLoading(false);
-      })();
-    }
-  }, [id, reset, setValue, isLoading]);
+    reset(superhero);
+  }, []);
 
-  async function handleSave(formData: Superhero) {
-    let url =  `${process.env.REACT_APP_API_SERVER}/api/v1/superheroes`;
-    let method = "POST";
-
-    if (formData.id) {
-      method = "PUT";
-      url += `/${formData.id}`;
-    }
-
-    await fetch(url, {
-      method,
-      body: JSON.stringify(formData),
-      headers: { "content-type": "application/json" },
-    });
-    handleClose();
+  if (!superhero) {
+    return <></>;
   }
+  async function handleSave(formData: Superhero) {}
 
   function handleClose() {
     navigate("/list");
   }
 
-  return isLoading ? (
-    <>
-      <CircularProgress />
-    </>
-  ) : (
+  return (
     <Card>
       <CardContent>
         <form onSubmit={handleSubmit(handleSave)}>
@@ -188,4 +160,4 @@ const AddNewSuperheroForm: React.FC = () => {
   );
 };
 
-export default AddNewSuperheroForm;
+export default EditSuperhero;

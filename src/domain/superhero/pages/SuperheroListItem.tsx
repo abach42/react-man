@@ -2,7 +2,7 @@ import { Delete, Edit, ZoomIn } from "@mui/icons-material";
 import { IconButton, TableCell, TableRow } from "@mui/material";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
-import { Superhero } from "./Superhero";
+import { Superhero } from "../Superhero";
 
 type SuperheroProps = {
   superhero: Superhero;
