@@ -4,24 +4,27 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { Container, GlobalStyles, PaletteMode } from "@mui/material";
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import SuperheroListPage from "./domain/superhero/pages/SuperheroListPage";
-import SuperheroProvider from "./domain/superhero/SuperheroProvider";
 import AuthProvider from "./domain/login/AuthProvider";
+import SuperheroListPage from "./domain/superhero/pages/SuperheroListPage";
 import SuperheroSinglePage from "./domain/superhero/pages/SuperheroSinglePage";
+import SuperheroProvider from "./domain/superhero/SuperheroProvider";
 import logo from "./logo.svg";
 import Nav from "./navigation/Nav";
 import NotFound from "./navigation/NotFound";
 
 import { amber, grey, teal } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import AddNewSuperheroForm from "./domain/superhero/AddNewSuperheroForm";
-import EditSuperhero from "./domain/superhero/EditSuperheroPage";
-import ConfirmDeleteSuperhero from "./domain/superhero/ConfirmDeleteSuperhero";
-import ColorModeContext from "./navigation/ColorModeContext";
-import ToggleColorMode from "./navigation/ToggleColorMode";
 import LoginForm from "./domain/login/LoginForm";
+import LogoffPage from "./domain/login/Logoff";
+import SuperheroCreate from "./domain/superhero/SuperheroCreate";
+import EditSuperhero from "./domain/superhero/SuperheroEditPage";
+import { PageProvider } from "./domain/superhero/PageContext";
+import SuperheroDeletePage from "./domain/superhero/pages/SuperheroDeletePage";
+import ColorModeContext from "./navigation/ColorModeContext";
+import { Private } from "./navigation/Private";
+import ToggleColorMode from "./navigation/ToggleColorMode";
 
 const customReactBlue = {
   main: "#00d8ff",
@@ -101,29 +104,32 @@ const App: React.FC = () => {
             <ToggleColorMode />
           </header>
           <main>
+          <PageProvider>
             <AuthProvider>
-              <SuperheroProvider>
-                <Nav />
-                <Container sx={{ marginTop: "80px" }}>
-                  <Routes>
-                    <Route path="/list" element={<SuperheroListPage />} />
-                    <Route path="/edit/:id" element={<EditSuperhero />} />
-                    <Route
-                      path="/delete/:id"
-                      element={<ConfirmDeleteSuperhero />}
-                    />
-                    <Route path="/new" element={<AddNewSuperheroForm />} />
-                    <Route
-                      path="/superhero/:id"
-                      element={<SuperheroSinglePage />}
-                    />
-                    {/*<Route path="/" element={<Navigate to="/list" />} />*/}
-                    <Route path="/" element={<LoginForm />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </Container>
-              </SuperheroProvider>
+                <SuperheroProvider>
+                  <Nav />
+                  <Container sx={{ marginTop: "80px" }}>
+                    <Routes>
+                      <Route path="/edit/:id" element={<Private><EditSuperhero /></Private>} />
+                      <Route
+                        path="/delete/:id"
+                        element={<Private><SuperheroDeletePage /></Private>}
+                      />
+                      <Route path="/new" element={<Private><SuperheroCreate /></Private>} />
+                      <Route
+                        path="/superhero/:id"
+                        element={<Private><SuperheroSinglePage /></Private>}
+                      />
+                      <Route path="/" element={<Navigate to="/login" />} />
+                      <Route path="/login" element={<LoginForm />} />
+                      <Route path="/logoff" element={<LogoffPage />} />
+                      <Route path="/list" element={<Private><SuperheroListPage /></Private>} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </Container>
+                </SuperheroProvider>
             </AuthProvider>
+            </PageProvider>
           </main>
         </div>
       </ThemeProvider>

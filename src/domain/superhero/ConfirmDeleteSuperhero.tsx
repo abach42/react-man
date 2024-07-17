@@ -1,33 +1,40 @@
 import { Close, DeleteForever } from "@mui/icons-material";
 import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { DeleteReceiver } from "../../api/DeleteReceiver";
+import { SuperheroConvertInvoker } from "../../api/SuperheroConvertInvoker";
+import { SuperheroSingleCommand } from "../../api/SuperheroSingleCommand";
+import AuthContext from "../login/AuthContext";
+import SuperheroContext from "./SuperheroContext";
+import ErrorMessage from "../../error/ErrorMessage";
 
 const ConfirmDeleteSuperhero: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { authRef } = useContext(AuthContext);
+  const [[superhero] = []] = useContext(SuperheroContext);
   const navigate = useNavigate();
 
+  if (!superhero) {
+    return <ErrorMessage message={'no superhero 🦸'} />;
+  }
+
   function handleDelete() {
-    // Send delete request here (logic moved)
     (async () => {
-      let url = "http://localhost:3001/superheroes";
-      let method = "DELETE";
-
-      url += `/${id}`;
-
-      await fetch(url, {
-        method,
-        headers: { "content-type": "application/json" },
-      }).then((response) => {
-        if (response.ok) {
-          //console.log(response);
-        }
-      });
-      navigate("/list"); // Redirect after successful deletion
+      const token = authRef.current;
+      const deleteReceiver = new DeleteReceiver();
+      const deleteCommand = new SuperheroSingleCommand(
+        deleteReceiver,
+        token,
+        superhero.id
+      );
+      const deleteInvoker = new SuperheroConvertInvoker(deleteCommand);
+      await deleteInvoker.invoke();
+      handleClose();
     })();
   }
 
-  function handleCancel() {
-    navigate("/list"); // Redirect to list on cancel
+  function handleClose() {
+    navigate("/list"); 
   }
 
   return (
@@ -41,15 +48,14 @@ const ConfirmDeleteSuperhero: React.FC = () => {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body1" align="center">
-              Sind Sie sicher, dass Sie den Superhero mit der ID {id} löschen
-              möchten?
+              Sind Sie sicher, dass Sie den Superhelden <strong>{superhero.alias}</strong> mit der ID {superhero.id} löschen möchten?
             </Typography>
           </Grid>
           <Grid item xs={6}>
             <Button
               variant="contained"
               color="secondary"
-              onClick={handleCancel}
+              onClick={handleClose}
             >
               <Close />
               Abbrechen

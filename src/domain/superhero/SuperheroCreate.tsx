@@ -1,18 +1,19 @@
 import { Close, Save } from "@mui/icons-material";
 import {
-    Button,
-    Card,
-    CardContent,
-    FormControl,
-    Grid,
-    InputLabel,
-    MenuItem,
-    Select,
-    TextField
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
 } from "@mui/material";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Superhero } from "./Superhero";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -20,16 +21,17 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs, { Dayjs } from "dayjs";
-import SuperheroContext from "./SuperheroContext";
+import { PostReceiver } from "../../api/PostReceiver";
+import { SuperheroAddCommand } from "../../api/SuperheroAddCommand";
+import { SuperheroConvertInvoker } from "../../api/SuperheroConvertInvoker";
+import AuthContext from "../login/AuthContext";
 
 enum Gender {
   Male = "Male",
   Female = "Female",
 }
 
-const EditSuperhero: React.FC = () => {
-  const [[superhero] = []] = useContext(SuperheroContext);
-
+const SuperheroCreate: React.FC = () => {
   const { control, register, handleSubmit, reset, setValue } =
     useForm<Superhero>({
       defaultValues: {
@@ -42,25 +44,49 @@ const EditSuperhero: React.FC = () => {
         user: {
           email: "",
           role: "USER",
+          password: "",
         },
       },
     });
   const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+  const [isLoading, setIsLoading] = useState(id ? true : false);
+  const { authRef } = useContext(AuthContext);
 
   useEffect(() => {
-    reset(superhero);
-  }, []);
+    if (id) {
+      (async () => {
+        await fetch(
+          `${process.env.REACT_APP_API_SERVER}/api/v1/superheroes/${id}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            reset(data);
+            setValue("gender", data.gender);
+            setValue("dateOfBirth", data.dateOfBirth);
+          });
+        setIsLoading(false);
+      })();
+    }
+  }, [id, reset, setValue, isLoading]);
 
-  if (!superhero) {
-    return <></>;
+  async function handleSave(formData: Superhero) {
+    const token = authRef.current;
+    const redeiver = new PostReceiver(formData as Superhero);
+    const command = new SuperheroAddCommand(redeiver, token);
+    const invoker = new SuperheroConvertInvoker(command);
+    const created = await invoker.invoke();
+    console.log(created);
+    handleClose();
   }
-  async function handleSave(formData: Superhero) {}
 
   function handleClose() {
     navigate("/list");
   }
 
-  return (
+  return isLoading ? (
+    <CircularProgress />
+  ) : (
     <Card>
       <CardContent>
         <form onSubmit={handleSubmit(handleSave)}>
@@ -85,9 +111,6 @@ const EditSuperhero: React.FC = () => {
                       <DatePicker
                         label="Date of Birth"
                         value={field.value !== "" ? dayjs(field.value) : null}
-                        slotProps={{
-                          field: { clearable: true, onClear: () => true },
-                        }}
                         onChange={(newValue: Dayjs | null) => {
                           if (newValue !== null) {
                             field.onChange(newValue.format("YYYY-MM-DD"));
@@ -133,8 +156,15 @@ const EditSuperhero: React.FC = () => {
                 {...register("originStory")}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <TextField fullWidth label="Email" {...register("user.email")} />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Password"
+                {...register("user.password")}
+              />
             </Grid>
             <Grid item xs={12}>
               <Button
@@ -160,4 +190,4 @@ const EditSuperhero: React.FC = () => {
   );
 };
 
-export default EditSuperhero;
+export default SuperheroCreate;

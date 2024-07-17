@@ -1,70 +1,84 @@
-import React, { useState, useContext } from "react";
-import axios from "axios";
+import React, { useContext, useState } from "react";
 import AuthContext from "./AuthContext";
+import { LoginCommand } from "./LoginCommand";
+import { LoginInvoker } from "./LoginInvoker";
+import { LoginReceiver } from "./LoginReceiver";
+import ErrorMessage from "../../error/ErrorMessage";
+import { useNavigate } from "react-router-dom";
+import { Button, Card, CardContent, Grid, TextField } from "@mui/material";
+import { Rocket } from "@mui/icons-material";
 
 const LoginForm: React.FC = () => {
-  const [username, setUsername] = useState('admin@example.com');
-  const [password, setPassword] = useState('foobar');
-  const [, setToken] = useContext(AuthContext);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const { setAuth } = useContext(AuthContext);
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
-  const login = async (username: string, password: string): Promise<string | null> => {
-    let url = `${process.env.REACT_APP_API_SERVER}/api/v1/login`;
-    
-    const credentials = `${username}:${password}`; // Use colon ':' to separate username and password
-    const base64Credentials = btoa(credentials); // Base64 encode credentials
-    
-    //console.log(credentials);
-    
-    const headers = {
-      "Authorization": `Basic ${base64Credentials}`,
-      "Content-Type": "application/json",
-    };
-    
-    try {
-      const response = await axios.get(url, { headers });
-    
-      if (response.status === 200) {
-        // Login successful, process the response data
-        //console.log("Login successful!", response.data);
-
-        const token = response.data;
-        setToken(token);
-        //console.log("Login successful! Token:", token);
-        return token;
-
-      } else {
-        // Handle other errors (potentially check for 401 here)
-        console.error("Error logging in:", response.statusText);
-        return null;
-      }
-    } catch (error) {
-      console.error("Error during login:", error);
-      return null;
-    }
-  };
-  
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const token = await login(username, password);
 
-    if (token) {
-      console.log('Token received:', token);
-      // Perform additional actions with the token if needed
-    } else {
-      console.log('Login failed');
+    try {
+      const token = await (async (
+        username: string,
+        password: string
+      ): Promise<string> => {
+        const receiver = new LoginReceiver(username, password);
+        const command = new LoginCommand(receiver);
+        const invoker = new LoginInvoker(command);
+        const loginResponseData = await invoker.invoke();
+        return loginResponseData;
+      })(username, password);
+
+      setAuth(token);
+      setErrorMessage("");
+      navigate("/list");
+    } catch (error) {
+      setIsError(true);
+      setErrorMessage("An error occurred during login. Please try again.");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="username">Username:</label>
-      <input type="text" id="username" value='admin@example.com' onChange={(e) => setUsername(e.target.value)} />
+    <>
+      {isError && <ErrorMessage message={errorMessage} />}
+      <Card>
+        <CardContent>
+          <form onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  type="text"
+                  id="username"
+                  label="Username"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </Grid>
 
-      <label htmlFor="password">Password:</label>
-      <input type="password" id="password" value='foobar' onChange={(e) => setPassword(e.target.value)} />
-
-      <button type="submit">Login</button>
-    </form>
+              <Grid item xs={12}>
+                <TextField
+                  type="password"
+                  id="password"
+                  label="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  type="submit"
+                  title="Login"
+                >
+                  <Rocket /> Login
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </CardContent>
+      </Card>
+    </>
   );
 };
 

@@ -1,7 +1,11 @@
-import { createContext, Dispatch, SetStateAction } from "react";
+import { createContext } from "react";
 
-const AuthContext = createContext<
-  [string, Dispatch<SetStateAction<string>>]
->(['', () => {}]);
+const AuthContext = createContext<{
+  authRef: React.MutableRefObject<string>;
+  setAuth: (token: string) => void;
+}>({
+  authRef: { current: "" },
+  setAuth: () => {},
+});
 
 export default AuthContext;

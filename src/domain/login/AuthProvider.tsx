@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useRef, useEffect } from "react";
 import AuthContext from "./AuthContext";
 
 type Props = {
@@ -6,10 +6,22 @@ type Props = {
 };
 
 const SuperheroProvider: React.FC<Props> = ({ children }) => {
-  const [auth, setAuth] = useState<string>('');
+  const authRef = useRef<string>(localStorage.getItem('authToken') || '');
+
+  const setAuth = (token: string) => {
+    authRef.current = token;
+    localStorage.setItem('authToken', token);
+  };
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('authToken');
+    if (storedToken) {
+      authRef.current = storedToken;
+    }
+  }, []);
 
   return (
-    <AuthContext.Provider value={[auth, setAuth]}>
+    <AuthContext.Provider value={{ authRef, setAuth }}>
       {children}
     </AuthContext.Provider>
   );

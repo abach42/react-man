@@ -2,9 +2,9 @@ import { Box, IconButton } from "@mui/material";
 import SuperheroLoader from "./SuperheroLoader";
 import { ArrowBackIos } from "@mui/icons-material";
 import { Link, useParams } from "react-router-dom";
-import EditSuperhero from "./EditSuperhero";
+import SuperheroEdit from "./SuperheroEdit";
 
-const EditSuperheroPage: React.FC = () => {
+const SuperheroEditPage: React.FC = () => {
     const params = useParams<{ id: string | undefined }>();
     const idOrNull: string | null = params.id ?? null;
 
@@ -19,7 +19,7 @@ const EditSuperheroPage: React.FC = () => {
                 alignItems: "center",
               }}
             >
-              <EditSuperhero />
+              <SuperheroEdit />
             </Box>
           </SuperheroLoader>
     
@@ -35,4 +35,4 @@ const EditSuperheroPage: React.FC = () => {
       );
 }
 
-export default EditSuperheroPage;
+export default SuperheroEditPage;

@@ -5,13 +5,14 @@ import CardContent from "@mui/material/CardContent";
 import { red } from "@mui/material/colors";
 import dayjs from "dayjs";
 import { useContext } from "react";
-import SuperheroContext from "../SuperheroContext";
+import SuperheroContext from "./SuperheroContext";
+import ErrorMessage from "../../error/ErrorMessage";
 
 const SuperheroSingle: React.FC = () => {
   const [[superhero] = []] = useContext(SuperheroContext);
 
   if (!superhero) {
-    return <></>;
+    return <ErrorMessage message={'no superhero 🦸'} />;
   }
 
   const letter = superhero.alias.charAt(0).toUpperCase();

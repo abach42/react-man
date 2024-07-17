@@ -1,89 +1,89 @@
 import { CircularProgress } from "@mui/material";
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import { GetReceiver } from "../../api/GetReceiver";
+import { SuperheroConvertInvoker } from "../../api/SuperheroConvertInvoker";
+import { SuperheroInvoker } from "../../api/SuperheroInvoker";
+import { SuperheroListCommand } from "../../api/SuperheroListCommand";
+import { SuperheroSingleCommand } from "../../api/SuperheroSingleCommand";
 import ErrorMessage from "../../error/ErrorMessage";
 import AuthContext from "../login/AuthContext";
 import { Superhero } from "./Superhero";
 import SuperheroContext from "./SuperheroContext";
-
+import { usePage } from "./PageContext";
+import { PageMeta } from "./PageMeta";
 type Props = {
   id: string | null;
   children: React.ReactNode;
 };
 
-abstract class RequestStrategy {
-  protected token: string | null;
-
-  constructor(token: string | null) {
-    this.token = token;
-  }
-  public abstract fetchSuperheroes(): Promise<Superhero[]>;
-
-  protected async sendRequestSuperheroes(
-    url: string
-  ): Promise<{ superheroes: Superhero[] } | Superhero > {
-    //console.log(this.token);
-  
-    const { data } = await axios.get<{ superheroes: Superhero[] }>(url, {
-      headers: {
-        Authorization: `Bearer ${this.token}`,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-    });
-
-    return data;
-  }
+interface RequestStrategy {
+  fetchSuperheroes(): Promise<Superhero[]>;
+  getPageMeta(): PageMeta | null;
 }
 
-class ListAbility extends RequestStrategy {
-  async fetchSuperheroes(): Promise<Superhero[]> {
-    const { superheroes } = (await this.sendRequestSuperheroes(
-      `${process.env.REACT_APP_API_SERVER}/api/v1/superheroes`
-    )) as { superheroes: Superhero[] };
+class ListAbility implements RequestStrategy {
+  private readonly invoker!: SuperheroInvoker;
 
-    return superheroes;
+  constructor(private token: string, private page: number) {
+    const receiver = new GetReceiver();
+    const command = new SuperheroListCommand(receiver, this.token, this.page);
+    this.invoker = new SuperheroInvoker(command);
   }
-}
 
-class SingleAbilty extends RequestStrategy {
-  constructor(private id: string, token: string | null) {
-    super(token);
+  getPageMeta(): PageMeta | null {
+    return this.invoker.pageMeta;
   }
 
   async fetchSuperheroes(): Promise<Superhero[]> {
-    const superheroes  = (await this.sendRequestSuperheroes(
-      `${process.env.REACT_APP_API_SERVER}/api/v1/superheroes/${this.id}`
-    )) as Superhero;
+    return await this.invoker.invoke();
+  }
+}
 
-    return [ superheroes ];
+class SingleAbility implements RequestStrategy {
+  constructor(private token: string, private id: number) {}
+
+  async fetchSuperheroes(): Promise<Superhero[]> {
+    const receiver = new GetReceiver();
+    const command = new SuperheroSingleCommand(receiver, this.token, this.id);
+    const invoker = new SuperheroConvertInvoker(command);
+    return await invoker.invoke();
+  }
+
+  getPageMeta(): PageMeta | null {
+    return null;
   }
 }
 
 const SuperheroLoader: React.FC<Props> = ({ id, children }) => {
+  const { authRef } = useContext(AuthContext);
   const [, setSuperheroes] = useContext(SuperheroContext);
+  const { page, setPageMeta } = usePage();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [token, ] = useContext(AuthContext);  // Get the token from the AuthContext
-  let strategy = new ListAbility(token);
-
-  if (id !== null) {
-    strategy = new SingleAbilty(id as string, token);
-  }
-
-
 
   useEffect(() => {
+    let strategy: RequestStrategy;
+
+    const token = authRef.current;
+
+    strategy = new ListAbility(token, page);
+
+    if (id !== null) {
+      strategy = new SingleAbility(token, parseInt(id, 10));
+    }
+
     (async () => {
       try {
         const superheroes = await strategy.fetchSuperheroes();
-
-        console.log(superheroes);
 
         if (!superheroes) {
           throw new Error("result was empty");
         }
         setSuperheroes(superheroes);
+
+        if (strategy.getPageMeta() !== null) {
+          setPageMeta(strategy.getPageMeta()!); // Set page metadata in context
+        }
       } catch (error: any) {
         setError(
           `No superheroes loaded: ${
@@ -94,7 +94,7 @@ const SuperheroLoader: React.FC<Props> = ({ id, children }) => {
         setIsLoading(false);
       }
     })();
-  }, [id, setSuperheroes]);
+  }, [id, authRef, page, setSuperheroes, setPageMeta]);
 
   if (error) {
     return <ErrorMessage message={error} />;

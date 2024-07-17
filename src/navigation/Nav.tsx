@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
 import { AppBar, IconButton, Menu, MenuItem, Toolbar } from "@mui/material";
-import { Add, Error, List, Menu as MenuIcon } from "@mui/icons-material";
+import { Add, Error, List, Login, Menu as MenuIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import LogoffPage from "../domain/login/Logoff";
 
 const Nav: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -67,6 +68,19 @@ const Nav: React.FC = () => {
               <Error />
             </IconButton>
           </MenuItem>
+
+          <MenuItem onClick={handleMenuClose}>
+            <IconButton
+              color="primary"
+              aria-label="logoff"
+              component={Link}
+              to={`/logoff`}
+            >
+              Ausloggen &nbsp;
+              <Login />
+            </IconButton>
+          </MenuItem>
+
         </Menu>
       </Toolbar>
     </AppBar>

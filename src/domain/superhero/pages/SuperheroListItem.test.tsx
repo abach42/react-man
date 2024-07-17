@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import SuperheroListItem from "./SuperheroListItem";
+import SuperheroListItem from "../SuperheroListItem";
 import { Superhero } from "../Superhero"; // Assuming Superhero interface is defined elsewhere
 import '@testing-library/jest-dom'
 

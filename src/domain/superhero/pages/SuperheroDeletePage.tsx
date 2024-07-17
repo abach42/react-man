@@ -1,17 +1,28 @@
-import { ArrowBackIos } from "@mui/icons-material";
-import { Box, IconButton } from "@mui/material";
-import { Link, useParams } from "react-router-dom";
+import { Box } from "@mui/material";
+import { useParams } from "react-router-dom";
+import ConfirmDeleteSuperhero from "../ConfirmDeleteSuperhero";
 import SuperheroLoader from "../SuperheroLoader";
 import SuperheroSingle from "../SupherheroSingle";
 
-const SuperheroSinglePage: React.FC = () => {
+const SuperheroDeletePage: React.FC = () => {
   const params = useParams<{ id: string | undefined }>();
   const idOrNull: string | null = params.id ?? null;
   
   return (
     <>
-      <h1>Superheld:in</h1>
+  
       <SuperheroLoader id={idOrNull}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ConfirmDeleteSuperhero />
+          
+        </Box>
+        <br />
         <Box
           sx={{
             display: "flex",
@@ -22,17 +33,8 @@ const SuperheroSinglePage: React.FC = () => {
           <SuperheroSingle />
         </Box>
       </SuperheroLoader>
-
-      <IconButton
-          color="primary"
-          aria-label="back"
-          component={Link}
-          to={`/list`}
-        >
-          <ArrowBackIos />Zurück zur Liste
-        </IconButton>
     </>
   );
 };
 
-export default SuperheroSinglePage;
+export default SuperheroDeletePage;

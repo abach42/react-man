@@ -9,13 +9,17 @@ import {
   TextField,
 } from "@mui/material";
 import { ChangeEvent, useContext, useState } from "react";
-import SuperheroContext from "../SuperheroContext";
-import { Superhero } from "../Superhero";
+import SuperheroContext from "./SuperheroContext";
+import { Superhero } from "./Superhero";
+import dayjs from "dayjs";
+import { Pagination } from "@mui/material";
+import { usePage } from "./PageContext";
 import SuperheroListItem from "./SuperheroListItem";
 
 const SuperheroList: React.FC = () => {
   const [superheroes] = useContext(SuperheroContext);
   const [filter, setFilter] = useState("");
+
 
   const headers = {
     realName: "Name",
@@ -82,7 +86,12 @@ const SuperheroList: React.FC = () => {
                   superhero.occupation
                     .toLowerCase()
                     .includes(filter.toLowerCase()) ||
-                  superhero.alias.toLowerCase().includes(filter.toLowerCase())
+                  superhero.alias
+                    .toLowerCase()
+                    .includes(filter.toLowerCase()) ||
+                  dayjs(superhero.dateOfBirth)
+                    .format("DD.MM.YYYY")
+                    .includes(filter)
                 );
               })
               .sort((a, b) => {
@@ -96,8 +105,28 @@ const SuperheroList: React.FC = () => {
               ))}
           </TableBody>
         </Table>
+        <PaginationControls />
       </Paper>
     </>
+  );
+};
+
+const PaginationControls: React.FC = () => {
+  const { page, setPage, pageMeta } = usePage();
+
+  const handleChangePage = (event: React.ChangeEvent<unknown>, newPage: number) => {
+    setPage(newPage);
+  };
+
+  if (!pageMeta) return null;
+
+  return (
+    <Pagination
+      count={pageMeta.totalPages}
+      page={page}
+      onChange={handleChangePage}
+      sx={{ display: 'flex', justifyContent: 'center', padding: '10px' }}
+    />
   );
 };
 
