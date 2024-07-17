@@ -1,6 +1,6 @@
 # Reactman of superhero
 
-## 1 Run abach42/supperhero
+## 1 Run abach42/superhero
 
 [Supperhero Repo](https://github.com/abach42/superhero)
 
