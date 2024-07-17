@@ -2,7 +2,7 @@
 
 ## 1 Run abach42/superhero
 
-[Supperhero Repo](https://github.com/abach42/superhero)
+[Superhero Repo](https://github.com/abach42/superhero)
 
 ## 2 Start application
 
