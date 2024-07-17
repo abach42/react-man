@@ -1,8 +1,16 @@
 # Reactman of superhero
 
-npx json-server -p 3001 -w ./fixtures/listSuperhero.json
+## 1 Run abach42/supperhero
 
-npm test
+[Supperhero Repo](https://github.com/abach42/superhero)
+
+## 2 Start application
+
+`npm install`
+
+`npm start`
+
+![React Man](reactman.png)
 
 # Getting Started with Create React App
 
