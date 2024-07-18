@@ -9,29 +9,26 @@ import axios from "axios";
     const created = await invoker.invoke();
  */
 export class PostReceiver implements SuperheroReceiver {
-  protected readonly METHOD: "PUT" | "POST" = 'POST';
+  protected readonly METHOD: "PUT" | "POST" = "POST";
   constructor(private superheroPayload: Superhero) {}
-  
+
   async doRequest(
     token: string,
     url: string
   ): Promise<Superhero[] | { superheroes: Superhero[] }> {
-
-    try {
-      const response = await axios({
-        method: this.METHOD,
-        url: url,
-        data: this.superheroPayload,
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      });
-      return response.data;
-    } catch (error) {
-      console.error(error);
-      throw new Error('Failed to fetch superheroes' + error);
-    }
+    const response = await axios({
+      method: this.METHOD,
+      url: url,
+      data: this.superheroPayload,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    }).catch((error) => {
+      throw new Error(error.response.data.message);
+    });
+    
+    return response.data;
   }
 }

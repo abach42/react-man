@@ -86,9 +86,7 @@ const SuperheroLoader: React.FC<Props> = ({ id, children }) => {
         }
       } catch (error: any) {
         setError(
-          `No superheroes loaded: ${
-            error.message || "An error occurred while fetching superheroes"
-          } ${error.response?.status ?? ""}`
+          `No superheroes loaded: ${error.message || "An error occurred while fetching superheroes"}`
         );
       } finally {
         setIsLoading(false);

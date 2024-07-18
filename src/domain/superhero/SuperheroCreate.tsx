@@ -75,8 +75,7 @@ const SuperheroCreate: React.FC = () => {
     const redeiver = new PostReceiver(formData as Superhero);
     const command = new SuperheroAddCommand(redeiver, token);
     const invoker = new SuperheroConvertInvoker(command);
-    const created = await invoker.invoke();
-    console.log(created);
+    await invoker.invoke();
     handleClose();
   }
 
