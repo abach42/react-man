@@ -7,12 +7,12 @@ import axios from "axios";
     const receiver = new GetReceiver();
     const command = new SuperheroListCommand(receiver, this.token, this.page);
     const invoker = new SuperheroInvoker(command);
-    const invoker.invoke();
+    const result = invoker.invoke();
 
     const receiver = new GetReceiver();
     const command = new SuperheroSingleCommand(receiver, this.token, this.id);
     const invoker = new SuperheroConvertInvoker(command);
-    const invoker.invoke();
+    const result = invoker.invoke();
  */
 export class GetReceiver implements SuperheroReceiver {
   protected readonly METHOD: "GET" | "DELETE" = "GET";

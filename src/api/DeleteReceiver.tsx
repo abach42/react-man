@@ -10,7 +10,7 @@ import { GetReceiver } from "./GetReceiver";
         superhero.id
     );
     const deleteInvoker = new SuperheroConvertInvoker(deleteCommand);
-    await deleteInvoker.invoke();
+    const deleted = deleteInvoker.invoke();
  */
 export class DeleteReceiver extends GetReceiver{
     protected readonly METHOD: "GET" | "DELETE" = 'DELETE';
