@@ -1,4 +1,4 @@
-import { Close, Save } from "@mui/icons-material";
+import { Close, Error, Save } from "@mui/icons-material";
 import {
   Button,
   Card,
@@ -62,10 +62,6 @@ const SuperheroEdit: React.FC = () => {
     return <ErrorMessage message={"no superhero 🦸"} />;
   }
 
-  if (error) {
-    return <ErrorMessage message={error} />;
-  }
-
   async function onSubmit(formData: Superhero) {
     await handleSave(formData);
     handleClose();
@@ -80,11 +76,7 @@ const SuperheroEdit: React.FC = () => {
       const updatedValue = await invoker.invoke();
       setSuperheroes(updatedValue);
     } catch (error: any) {
-      setError(
-        `${error.message || "An api error occurred"} ${
-          error.response?.status ?? ""
-        }`
-      );
+      setError(`${error.message || "An api error occurred"}`);
     }
   };
 
@@ -93,102 +85,116 @@ const SuperheroEdit: React.FC = () => {
   }
 
   return (
-    <Card>
-      <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Real Name"
-                {...register("realName")}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField fullWidth label="Alias" {...register("alias")} />
-            </Grid>
-            <Grid item xs={6}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={["DatePicker"]}>
+    <>
+      {error ? (
+        <>
+          <Error />
+          <ErrorMessage message={error} />
+        </>
+      ) : (
+        ""
+      )}
+      <Card>
+        <CardContent>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Real Name"
+                  {...register("realName")}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField fullWidth label="Alias" {...register("alias")} />
+              </Grid>
+              <Grid item xs={6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={["DatePicker"]}>
+                    <Controller
+                      name="dateOfBirth"
+                      control={control}
+                      render={({ field }) => (
+                        <DatePicker
+                          label="Date of Birth"
+                          value={field.value !== "" ? dayjs(field.value) : null}
+                          slotProps={{
+                            field: { clearable: true, onClear: () => true },
+                          }}
+                          onChange={(newValue: Dayjs | null) => {
+                            if (newValue !== null) {
+                              field.onChange(newValue.format("YYYY-MM-DD"));
+                            }
+                          }}
+                          openTo="year"
+                          views={["year", "month", "day"]}
+                          format="DD.MM.YYYY"
+                        />
+                      )}
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth>
+                  <InputLabel>Gender</InputLabel>
                   <Controller
-                    name="dateOfBirth"
+                    name="gender"
                     control={control}
                     render={({ field }) => (
-                      <DatePicker
-                        label="Date of Birth"
-                        value={field.value !== "" ? dayjs(field.value) : null}
-                        slotProps={{
-                          field: { clearable: true, onClear: () => true },
-                        }}
-                        onChange={(newValue: Dayjs | null) => {
-                          if (newValue !== null) {
-                            field.onChange(newValue.format("YYYY-MM-DD"));
-                          }
-                        }}
-                        openTo="year"
-                        views={["year", "month", "day"]}
-                        format="DD.MM.YYYY"
-                      />
+                      <Select label="Gender" {...field}>
+                        <MenuItem value={Gender.Male}>Male</MenuItem>
+                        <MenuItem value={Gender.Female}>Female</MenuItem>
+                      </Select>
                     )}
                   />
-                </DemoContainer>
-              </LocalizationProvider>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth>
-                <InputLabel>Gender</InputLabel>
-                <Controller
-                  name="gender"
-                  control={control}
-                  render={({ field }) => (
-                    <Select label="Gender" {...field}>
-                      <MenuItem value={Gender.Male}>Male</MenuItem>
-                      <MenuItem value={Gender.Female}>Female</MenuItem>
-                    </Select>
-                  )}
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  label="Occupation"
+                  {...register("occupation")}
                 />
-              </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Origin Story"
+                  multiline
+                  minRows={4}
+                  {...register("originStory")}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Email"
+                  {...register("user.email")}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  sx={{ marginRight: "10px" }}
+                >
+                  <Save /> Speichern
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleClose}
+                >
+                  <Close /> Abbrechen
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="Occupation"
-                {...register("occupation")}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Origin Story"
-                multiline
-                minRows={4}
-                {...register("originStory")}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField fullWidth label="Email" {...register("user.email")} />
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                sx={{ marginRight: "10px" }}
-              >
-                <Save /> Speichern
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleClose}
-              >
-                <Close /> Abbrechen
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </CardContent>
-    </Card>
+          </form>
+        </CardContent>
+      </Card>
+    </>
   );
 };
 
